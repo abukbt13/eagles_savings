@@ -11,5 +11,8 @@
         <a href="dashboard.php" class="btn btn-success">
             Dashboard
         </a>
+        <a href="logout.php" class="btn btn-success">
+            Logout
+        </a>
     </div>
 </div>

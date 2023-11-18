@@ -1,15 +1,17 @@
 <?php
 include 'connection.php';
 if(isset($_POST["register"])) {
-    $username = $_POST['username'];
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $phone = $_POST['phone'];
     $email = $_POST['email'];
     $password = md5($_POST['password']);
     $time=time();
 
-    $sql2 = "select username from users where email='$email'";
+    $sql2 = "select first_name from users where email='$email'";
     $result2 = mysqli_query($conn, $sql2);
     $count2 = mysqli_num_rows($result2);
-    if ($username == "" || $password == "" || $email == "") {
+    if ($fname == "" || $lname == "" || $email == "") {
         session_start();
         $_SESSION['status'] = 'All inputs are required';
         header("Location:register.php");
@@ -21,30 +23,15 @@ if(isset($_POST["register"])) {
             header("location:register.php");
         }
         else {
-            $save = "insert into users(username,email,password) values('$username','$email','$password')";
+            $save = "insert into users(first_name,last_name,phone,email,password) values('$fname','$lname','$phone','$email','$password')";
             $res = mysqli_query($conn, $save);
             if ($res) {
-                $find = "select * from users where email='$email'";
-                $retrieve = mysqli_query($conn, $find);
-                $users = mysqli_fetch_all($retrieve, MYSQLI_ASSOC);
-
-
-                //the password was correct
-                foreach ($users as $user) {
-                    $user_id = $user['user_id'];
-                    $uid = $user['user_id'];
-                    $role = $user['role'];
-                    $username = $user['username'];
-                }
-
 
                 session_start();
-                $_SESSION['status'] = 'SUccessfully registered';
-                $_SESSION['username'] = $username;
-                $_SESSION['user_id'] =  $user_id;
-                $_SESSION['uid'] =  $uid;
-                $_SESSION['role'] = $role;
-                header("location:dashboard.php");
+                $_SESSION['status'] = 'Successfully registered login now';
+                //the password was correct
+
+                header("location:login.php");
             }
             else {
                 session_start();
@@ -59,7 +46,7 @@ if(isset($_POST["register"])) {
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = md5($_POST['password']);
-    $sql = "select username from users where email='$email' && password='$password'";
+    $sql = "select first_name from users where email='$email' && password='$password'";
     $query = mysqli_query($conn, $sql);
     $count = mysqli_num_rows($query);
 
@@ -71,28 +58,26 @@ if (isset($_POST['login'])) {
 
         //the password was correct
         foreach ($users as $user) {
-            $user_id = $user['user_id'];
-            $uid = $user['user_id'];
+            $user_id = $user['id'];
             $role = $user['role'];
-            $username = $user['username'];
+            $fname = $user['first_name'];
+            $lname = $user['last_name'];
         }
         if($role == '1'){
             session_start();
             $_SESSION['user_id'] = $user_id;
-            $_SESSION['uid'] =  $uid;
             $_SESSION['status'] = 'welcome back';
-            $_SESSION['username'] = $username;
-            $_SESSION['email'] = $email;
+            $_SESSION['first_name'] = $fname;
+            $_SESSION['last_name'] = $lname;
             $_SESSION['role'] = $role;
-            header("location:admindashboard.php");
+            header("location:admin.php");
         }
         else{
             session_start();
             $_SESSION['user_id'] = $user_id;
-            $_SESSION['uid'] =  $uid;
             $_SESSION['status'] = 'welcome back';
-            $_SESSION['username'] = $username;
-            $_SESSION['email'] = $email;
+            $_SESSION['first_name'] = $fname;
+            $_SESSION['last_name'] = $lname;
             $_SESSION['role'] = $role;
             header("location:dashboard.php");
         }

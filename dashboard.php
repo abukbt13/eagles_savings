@@ -1,13 +1,14 @@
 <?php
 session_start();
 include 'connection.php';
-if (isset($_SESSION['uid'])) {
+if (!isset($_SESSION['user_id'])) {
     session_start();
     $_SESSION['status'] = 'lOGIN TO VIEW THIS PAGE';
-    header('Location:signin.php');
+    header('Location:login.php');
 }
-
-include "header.php";
+$last_name = $_SESSION['last_name'] ;
+$first_name = $_SESSION['first_name'] ;
+    include "header.php";
 ?>
 <!doctype html>
 <html lang="en">
@@ -37,13 +38,14 @@ include "header.php";
         <h5 class="mb-1" id="offcanvasExampleLabel">Dashboard</h5>
 
             <img style="border-radius: 50%;" src="eagle.jpeg" width="90" height="90" alt="">
-            <span><?php echo $_SESSION['username'];?></span><br>
+            <h4><?php echo $first_name; echo " "; echo $last_name ;?></h4>
         <button class="btn btn-sm btn-secondary">Edit</button>
         <hr>
 
         <a href="#" class="text-uppercase"><p>My savings</p></a>
         <a href="#" class="text-uppercase"><p>My loans</p></a>
         <a href="#" class="text-uppercase"><p>Events</p></a>
+        <a href="applyloan.php" class="text-uppercase"><p>Apply loan</p></a>
     </div>
     <div class="data">
         <table class="table border table-bordered table-striped">

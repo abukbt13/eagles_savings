@@ -18,7 +18,7 @@
             if(isset($_SESSION['status'])){
                 ?>
                 <div>
-                    <p class="text-white bg-danger btn-danger p-2"><?php echo $_SESSION['status']; ?> ?</p>
+                    <p class="text-danger btn-danger p-2"><?php echo $_SESSION['status']; ?> ?</p>
                 </div>
                 <?php
                 unset($_SESSION['status']);
@@ -27,7 +27,6 @@
             <div class="p-4 pb-5">
                 <form method="post" action="processor.php">
                     <p>Dont have an Account?<a class="" href="register.php">Register</a></p>
-
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Email address</label>
                         <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -43,7 +42,6 @@
                     </div>
                 </form>
             </div>
-            <p>Dont have an Account?<a class="" href="signup.php">Register</a></p>
     </div>
 </div>
 </div>
