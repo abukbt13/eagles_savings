@@ -1,16 +1,15 @@
-
-
-<?php include 'header.php';
-include 'connection.php';
-?>
-
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<!--<body style="background-image:url('Images/login-background.jpg');">-->
+<body>
+<?php include 'header.php';?>
 <div class="row d-flex align-items-center justify-content-center">
 
     <div  style="width: 23rem;" class="p-5 mb-5 bg-white pt-5 mt-4 mb-3 rounded">
@@ -59,7 +58,6 @@ include 'connection.php';
 
         </form>
     </div>
-</div>
 </div>
 </body>
 </html>

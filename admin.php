@@ -9,20 +9,32 @@ if (!isset($_SESSION['user_id'])) {
     header('Location:login.php');
 }
 
-if(isset($_POST["savings"])) {
+if(isset($_POST["update_savings"])) {
 $amount = $_POST['amount'];
-$user_id = $_POST['user_id'];
+$savings_user_id = $_POST['user_id'];
     $date = date('d-m-y');
     $weekNumber = date('W');
 
+    $find_ifSaved = "SELECT * FROM savings WHERE user_id = $savings_user_id AND week = $weekNumber";
+    $result = mysqli_query($conn, $find_ifSaved); // Make sure to replace $your_db_connection with your actual database connection variable
 
+    $exist_saving = mysqli_num_rows($result);
+
+    if ($exist_saving > 0) {
+        $_SESSION['status'] = 'Savings already done, please update savings';
+        $_SESSION['savings_user_id'] = $savings_user_id;
+        header('Location: update_savings.php');
+        exit(); // It's good practice to include exit() after header() to ensure no further code execution after redirection
+    }
+
+    else{
         $save = "insert into savings(amount,user_id,week,date) values('$amount','$user_id','$weekNumber','$date')";
         $res = mysqli_query($conn, $save);
         if($res){
             $_SESSION['status'] = 'Successfully saved ';
             header('Location:admin.php');
         }
-
+    }
 }
 
 include "header.php";
@@ -102,7 +114,8 @@ include "header.php";
                 </thead>
                 <tbody>
                 <?php
-                $savings="SELECT * FROM savings JOIN users ON savings.user_id = users.id";
+                $week=date('W');
+                $savings="SELECT * FROM savings JOIN users ON savings.user_id = users.id where week = $week";
                 $savingsrun=mysqli_query($conn,$savings);
 
                 while($saves=mysqli_fetch_assoc($savingsrun)) {
@@ -144,7 +157,7 @@ include "header.php";
 
                         while($allUsers=mysqli_fetch_assoc($usersrun)) {
                         ?>
-                        <option value="<?php echo $allUsers['id']; ?>"><?php echo $allUsers['first_name']; echo" "; echo $allUsers['first_name']; ?></option>
+                        <option value="<?php echo $allUsers['id']; ?>"><?php echo $allUsers['first_name']; echo" "; echo $allUsers['last_name']; ?></option>
                             <?php
                         }
                         ?>
@@ -156,7 +169,7 @@ include "header.php";
                 </div>
 
 
-                <button type="submit" name="savings" class="btn btn-primary w-100">Add Saving</button>
+                <button type="submit" name="update_savings" class="btn btn-primary w-100">Add Saving</button>
 
             </form>
         </div>

@@ -6,6 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     $_SESSION['status'] = 'lOGIN TO VIEW THIS PAGE';
     header('Location:login.php');
 }
+$user_id= $_SESSION['user_id'];
 $last_name = $_SESSION['last_name'] ;
 $first_name = $_SESSION['first_name'] ;
     include "header.php";
@@ -35,11 +36,11 @@ $first_name = $_SESSION['first_name'] ;
 <div class="contents">
     <div class="sidebar px-2 bg-light">
 
-        <h5 class="mb-1" id="offcanvasExampleLabel">Dashboard</h5>
+        <h4 class="mb-1 text-uppercase" id="offcanvasExampleLabel">MY Dashboard</h4>
+        <hr>
 
-            <img style="border-radius: 50%;" src="eagle.jpeg" width="90" height="90" alt="">
             <h4><?php echo $first_name; echo " "; echo $last_name ;?></h4>
-        <button class="btn btn-sm btn-secondary">Edit</button>
+        <button class="btn btn-sm btn-secondary">Edit your profile</button>
         <hr>
 
         <a href="#" class="text-uppercase"><p>My savings</p></a>
@@ -55,24 +56,30 @@ $first_name = $_SESSION['first_name'] ;
             </tr>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Full Name</th>
-                <th scope="col">Phone Number</th>
-                <th scope="col">Savings</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date saved</th>
+                <th scope="col">Week of savings</th>
+                <th scope="col">Operations</th>
             </tr>
             </thead>
             <tbody>
+            <?php
+            $savings="SELECT * FROM savings JOIN users ON savings.user_id = users.id where user_id=$user_id";
+            $savingsrun=mysqli_query($conn,$savings);
+                $id=1;
+            while($saves=mysqli_fetch_assoc($savingsrun)) {
+            ?>
+            <tr>
+                <th><?php echo $id++ ?></th>
+                <th ><?php echo $saves['amount'] ?></th>
+                <td><?php echo $saves['date'] ?></td>
+                <td><?php echo $saves['week'] ?></td>
+                <td><button class="btn btn-success">query</button></td>
+            </tr>
+            <?php
+            }
+            ?>
 
-            <tr>
-                <th>2</th>
-                <th scope="row">Abraham Kibet</th>
-                <td>0728548760</td>
-                <td>6789</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-            </tr>
             </tbody>
 
         </table>
