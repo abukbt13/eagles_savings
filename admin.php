@@ -28,7 +28,7 @@ $savings_user_id = $_POST['user_id'];
     }
 
     else{
-        $save = "insert into savings(amount,user_id,week,date) values('$amount','$user_id','$weekNumber','$date')";
+        $save = "insert into savings(amount,user_id,week,date) values('$amount','$savings_user_id','$weekNumber','$date')";
         $res = mysqli_query($conn, $save);
         if($res){
             $_SESSION['status'] = 'Successfully saved ';
@@ -52,14 +52,16 @@ include "header.php";
 </head>
 <div>
     <style>
-        .contents{
-            display: flex;
-        }
         .sidebar{
-            width: 13rem;
-            height: 100vh;
+            background: yellow;
+            display: block;
+            position: absolute;
+            left: 2rem;
+            top: 1rem;
         }
+
         .loan{
+            width: 23rem;
             position: absolute;
             top: 5rem;
             left: 15rem;
@@ -68,6 +70,19 @@ include "header.php";
             padding: 2rem;
             display: none;
         }
+        @media (min-width: 300px) and (max-width: 600px) {
+            .loan {
+                width: 16rem;
+                position: absolute;
+                top: 2rem;
+                left: 2rem;
+                background: grey;
+                z-index: 0.2;
+                padding: 2rem;
+                display: none;
+            }
+        }
+
     </style>
     <?php
     if(isset($_SESSION['status'])){
@@ -79,14 +94,14 @@ include "header.php";
         unset($_SESSION['status']);
     }
     ?>
-    <div class="contents">
-        <div class="sidebar px-2 bg-light">
+    <div class="contents  d-md-flex d-lg-flex">
+        <button onclick="sideBar()" class="btn btn-primary d-block d-md-none d-lg-none">Show Sidebar</button>
+        <div id="sidebar" class="d-none  d-md-block d-lg-block">
 
-            <h5 class="mb-1" id="offcanvasExampleLabel">Admin Dashboard</h5>
+            <h5 class="mb-1" >Dashboard</h5>
+            <hr class="bg-dark">
+            <h4><?php echo $first_name; echo " "; echo $last_name; ?> <button class="btn btn-sm btn-secondary">Edit</button></h4><br>
 
-            <img style="border-radius: 50%;" src="eagle.jpeg" width="90" height="90" alt="">
-            <h4><?php echo $first_name; echo " "; echo $last_name; ?></h4><br>
-            <button class="btn btn-sm btn-secondary">Edit</button>
             <hr>
 
             <a href="#" class="text-uppercase"><p>All savings</p></a>
@@ -94,13 +109,15 @@ include "header.php";
             <a href="#" class="text-uppercase"><p>Events</p></a>
             <a href="applyloan.php" class="text-uppercase"><p>Loan Applications</p></a>
         </div>
-        <div class="data">
-            <table class="table border table-bordered table-striped">
+
+
+        <div class="table-responsive">
+            <table class="table  border table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th colspan="6" class=""><div class=" d-flex align-items-center justify-content-between">
-                            All savings
-                            <button class="btn btn-primary float-end"onclick="showForm()" >Add savings</button>
+                    <th colspan="7" class=""><div class=" d-flex align-items-center justify-content-between">
+                            This savings
+                            <button class="btn btn-primary float-end" onclick="showForm()">Add savings</button>
                         </div> </th>
                 </tr>
                 <tr>
@@ -117,11 +134,11 @@ include "header.php";
                 $week=date('W');
                 $savings="SELECT * FROM savings JOIN users ON savings.user_id = users.id where week = $week";
                 $savingsrun=mysqli_query($conn,$savings);
-
+                $id=1;
                 while($saves=mysqli_fetch_assoc($savingsrun)) {
                 ?>
                 <tr>
-                    <th><?php echo $saves['id']?></th>
+                    <th><?php echo $id++; ?></th>
                     <th><?php echo $saves['first_name']?></th>
                     <th><?php echo $saves['last_name']?></th>
                     <th><?php echo $saves['amount']?></th>
@@ -137,12 +154,13 @@ include "header.php";
 
             </table>
         </div>
+
     </div>
 
     </body>
 
 
-        <div  style="width: 23rem;" id="loan" class="loan  rounded">
+        <div id="loan" class="loan  rounded">
             <button type="button" onclick="closeBtn()" class="btn-close float-end" aria-label="Close"></button>
 
             <form action="admin.php" method="post">
@@ -173,15 +191,7 @@ include "header.php";
 
             </form>
         </div>
-    <script type="application/javascript">
-        const loan = document.getElementById('loan')
-        const close = document.getElementById('close')
-        function showForm() {
-            loan.style.display = 'block';
-        }
-        function closeBtn() {
-            loan.style.display = 'none';
-        }
+    <script src="admin.js">
 
     </script>
 </html>

@@ -9,6 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id= $_SESSION['user_id'];
 $last_name = $_SESSION['last_name'] ;
 $first_name = $_SESSION['first_name'] ;
+include "header.php";
 ?>
 <!doctype html>
 <html lang="en">
@@ -17,65 +18,29 @@ $first_name = $_SESSION['first_name'] ;
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin Dashboard</title>
+    <title>Dashboard</title>
     <link rel="shortcut icon" href="/img.jpg">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<?php
-include "header.php";
-?>
 <div>
     <style>
+        .contents{
+            display: flex;
+        }
         .sidebar{
-            background: yellow;
-            display: block;
-            position: absolute;
-            left: 2rem;
-            top: 1rem;
+            width: 13rem;
+            height: 100vh;
         }
-
-        .loan{
-            width: 23rem;
-            position: absolute;
-            top: 5rem;
-            left: 15rem;
-            background: grey;
-            z-index: 0.2;
-            padding: 2rem;
-            display: none;
-        }
-        @media (min-width: 300px) and (max-width: 600px) {
-            .loan {
-                width: 16rem;
-                position: absolute;
-                top: 2rem;
-                left: 2rem;
-                background: grey;
-                z-index: 0.2;
-                padding: 2rem;
-                display: none;
-            }
-        }
-
     </style>
-    <?php
-    if(isset($_SESSION['status'])){
-        ?>
-        <div>
-            <p class="text-white bg-danger btn-danger p-2"><?php echo $_SESSION['status']; ?> ?</p>
-        </div>
-        <?php
-        unset($_SESSION['status']);
-    }
-    ?>
-    <div class="contents  d-md-flex d-lg-flex">
-        <button onclick="sideBar()" class="btn btn-primary d-block d-md-none d-lg-none">Show Sidebar</button>
-        <div id="sidebar" class="d-none  d-md-block d-lg-block">
 
-            <h5 class="mb-1" >Dashboard</h5>
-            <hr class="bg-dark">
-            <h4><?php echo $first_name; echo " "; echo $last_name; ?> <button class="btn btn-sm btn-secondary">Edit</button></h4><br>
+    <div class="contents">
+        <div class="sidebar px-2 bg-light">
 
+            <h4 class="mb-1 text-uppercase" id="offcanvasExampleLabel">MY Dashboard</h4>
+            <hr>
+
+            <h4><?php echo $first_name; echo " "; echo $last_name ;?></h4>
+            <button class="btn btn-sm btn-secondary">Edit your profile</button>
             <hr>
 
             <a href="#" class="text-uppercase"><p>My savings</p></a>
@@ -83,13 +48,11 @@ include "header.php";
             <a href="#" class="text-uppercase"><p>Events</p></a>
             <a href="applyloan.php" class="text-uppercase"><p>Apply loan</p></a>
         </div>
-
-
-        <div class="table-responsive">
+        <div class="data">
             <table class="table border table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th colspan="5" class="text-center">All savings</th>
+                    <th colspan="4" class="text-center">All savings</th>
                 </tr>
                 <tr>
                     <th scope="col">#</th>
@@ -121,13 +84,7 @@ include "header.php";
 
             </table>
         </div>
-
     </div>
 
     </body>
-
-
-    <script src="admin.js">
-
-    </script>
 </html>
