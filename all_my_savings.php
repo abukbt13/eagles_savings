@@ -74,14 +74,11 @@ include "header.php";
             <h5 class="mb-1">Dashboard</h5>
             <hr>
             <h2>Savings</h2>
-            <a href="#" class="text-uppercase text-decoration-none"><p>This weeks</p></a>
+            <a href="dashboard.php" class="text-uppercase text-decoration-none"><p>This weeks</p></a>
             <a href="all_my_savings.php" class="text-uppercase text-decoration-none"><p>all_my_savings</p></a>
             <h2>Loans</h2>
             <a href="myloans.php" class="text-uppercase text-decoration-none"><p>My loans</p></a>
             <a href="applyloan.php" class="text-uppercase text-decoration-none"><p>Apply loan</p></a>
-            <h2>Messages</h2>
-            <a href="my_messages.php" class="text-uppercase text-decoration-none"><p>Messages</p></a>
-
         </div>
 
 
@@ -101,8 +98,7 @@ include "header.php";
                 </thead>
                 <tbody>
                 <?php
-                $week=date('W');
-                $savings="SELECT * FROM savings JOIN users ON savings.user_id = users.id where user_id=$user_id and week ='$week'";
+                $savings="SELECT * FROM savings JOIN users ON savings.user_id = users.id where user_id=$user_id";
                 $savingsrun=mysqli_query($conn,$savings);
                 $id=1;
                 while($saves=mysqli_fetch_assoc($savingsrun)) {

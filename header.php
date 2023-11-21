@@ -10,7 +10,7 @@ li:hover{
     cursor: pointer;
 }
 </style>
-<div class="head   mx-2 d-md-flex d-lg-flex  justify-content-between align-items-center py-1 bg-light">
+<div class="head   mx-2 d-md-flex d-lg-flex  justify-content-between align-items-center  bg-light">
     <h2 style="font-size: 18px;">Eagles Savings
         <div id="menu" style="background: yellow; padding: 0.3rem" class="border d-block d-lg-none d-md-none border-primary float-end" aria-label="Close">Menu</div>
         <div id="close" style="background: yellow; padding: 0.3rem" class="border d-none d-lg-none d-md-none  border-primary float-end" aria-label="Close">Close</div>
@@ -35,9 +35,8 @@ li:hover{
               </a>
           </li>
           <li>
-              <a href="logout.php" class="btn btn-success">
-                  Logout
-              </a>
+              <img src="eagle.jpeg" width="40" height="40" alt="">
+              view
           </li>
       </ul>
     </div>

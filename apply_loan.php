@@ -15,8 +15,8 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 if(isset($_POST["update_savings"])) {
-$amount = $_POST['amount'];
-$savings_user_id = $_POST['user_id'];
+    $amount = $_POST['amount'];
+    $savings_user_id = $_POST['user_id'];
     $date = date('d-m-y');
     $weekNumber = date('W');
 
@@ -106,18 +106,17 @@ include "header.php";
         <button onclick="sideBar()" class="btn btn-primary d-block d-md-none d-lg-none">Show Sidebar</button>
         <div id="sidebar" class="d-none sidebar_side p-4 d-md-block d-lg-block">
 
-            <h1 class="mb-1">Dashboard</h1>
+            <h5 class="mb-1" >Dashboard</h5>
+            <hr class="bg-dark">
+            <h4><?php echo $first_name; echo " "; echo $last_name; ?> <button class="btn btn-sm btn-secondary">Edit</button></h4><br>
+
             <hr>
-            <h3>Savings</h3>
-            <a href="admin.php" class="text-uppercase nav-link nav-active text-decoration-none"><p>Home</p></a>
-            <a href="all_saving.php" class="text-uppercase   text-decoration-none"><p>All savings</p></a>
-            <h3>Loans</h3>
-            <a href="all_loans.php" class="text-uppercase text-decoration-none"><p>all loans</p></a>
-            <a href="loan_application.php" class="text-uppercase text-decoration-none"><p>Loan Applications</p></a>
-            <h2>Events</h2>
-            <a href="events.php" class="text-uppercase text-decoration-none"><p>Recent Events</p></a>
-            <h3>Plans And Activities</h3>
-            <a href="plans.php" class="text-uppercase text-decoration-none"><p>Plans</p></a>
+
+            <a href="admin.php" class="text-uppercase  text-decoration-none"><p>Home</p></a>
+            <a href="all_saving.php" class="text-uppercase nav-link active  text-decoration-none"><p>All savings</p></a>
+            <a href="all_loans" class="text-uppercase text-decoration-none"><p>All loans</p></a>
+            <a href="Events" class="text-uppercase text-decoration-none"><p>Events</p></a>
+            <a href="apply_loan.php" class="text-uppercase text-decoration-none"><p>Loan Applications</p></a>
         </div>
 
 
@@ -143,21 +142,21 @@ include "header.php";
                 <tbody>
                 <?php
                 $week=date('W');
-                $savings="SELECT * FROM savings JOIN users ON savings.user_id = users.id where week = $week";
+                $savings="SELECT * FROM savings JOIN users ON savings.user_id = users.id";
                 $savingsrun=mysqli_query($conn,$savings);
                 $id=1;
                 while($saves=mysqli_fetch_assoc($savingsrun)) {
-                ?>
-                <tr>
-                    <th><?php echo $id++; ?></th>
-                    <th><?php echo $saves['first_name']?></th>
-                    <th><?php echo $saves['last_name']?></th>
-                    <th><?php echo $saves['amount']?></th>
-                    <th><?php echo $saves['date']?></th>
-                    <th><?php echo $saves['week']?></th>
+                    ?>
+                    <tr>
+                        <th><?php echo $id++; ?></th>
+                        <th><?php echo $saves['first_name']?></th>
+                        <th><?php echo $saves['last_name']?></th>
+                        <th><?php echo $saves['amount']?></th>
+                        <th><?php echo $saves['date']?></th>
+                        <th><?php echo $saves['week']?></th>
 
-                    <th scope="col"><button class="btn btn-primary float-end">Edit</button></th></td>
-                </tr>
+                        <th scope="col"><button class="btn btn-primary float-end">Edit</button></th></td>
+                    </tr>
                     <?php
                 }
                 ?>
@@ -171,37 +170,37 @@ include "header.php";
     </body>
 
 
-        <div id="loan" class="loan  rounded">
-            <button type="button" onclick="closeBtn()" class="btn-close float-end" aria-label="Close"></button>
+    <div id="loan" class="loan  rounded">
+        <button type="button" onclick="closeBtn()" class="btn-close float-end" aria-label="Close"></button>
 
-            <form action="admin.php" method="post">
-                <h2 class="text-primary" style="text-align: center;">Savings Records</h2>
+        <form action="admin.php" method="post">
+            <h2 class="text-primary" style="text-align: center;">Savings Records</h2>
 
 
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Member Name</label>
-                    <select name="user_id" id="" class="form-control">
-                        <?php $users="select * from users";
-                        $usersrun=mysqli_query($conn,$users);
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Member Name</label>
+                <select name="user_id" id="" class="form-control">
+                    <?php $users="select * from users";
+                    $usersrun=mysqli_query($conn,$users);
 
-                        while($allUsers=mysqli_fetch_assoc($usersrun)) {
+                    while($allUsers=mysqli_fetch_assoc($usersrun)) {
                         ?>
                         <option value="<?php echo $allUsers['id']; ?>"><?php echo $allUsers['first_name']; echo" "; echo $allUsers['last_name']; ?></option>
-                            <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Amount in Shillings</label>
-                    <input type="number" min="1" class="form-control" name="amount">
-                </div>
+                        <?php
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Amount in Shillings</label>
+                <input type="number" min="1" class="form-control" name="amount">
+            </div>
 
 
-                <button type="submit" name="update_savings" class="btn btn-primary w-100">Add Saving</button>
+            <button type="submit" name="update_savings" class="btn btn-primary w-100">Add Saving</button>
 
-            </form>
-        </div>
+        </form>
+    </div>
     <script src="admin.js">
 
     </script>
