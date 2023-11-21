@@ -3,6 +3,11 @@ session_start();
 $last_name = $_SESSION['last_name'] ;
 $first_name = $_SESSION['first_name'] ;
 include 'connection.php';
+if ($_SESSION['role'] != 1) {
+    header('Location: dashboard.php');
+    exit(); // It's a good practice to include exit() after header() to ensure no further code execution after redirection
+}
+
 if (!isset($_SESSION['user_id'])) {
     session_start();
     $_SESSION['status'] = 'lOGIN TO VIEW THIS PAGE';
@@ -82,6 +87,9 @@ include "header.php";
                 display: none;
             }
         }
+        .sidebar_side a:hover{
+            background: ;
+        }
 
     </style>
     <?php
@@ -96,7 +104,7 @@ include "header.php";
     ?>
     <div class="contents  d-md-flex d-lg-flex">
         <button onclick="sideBar()" class="btn btn-primary d-block d-md-none d-lg-none">Show Sidebar</button>
-        <div id="sidebar" class="d-none  d-md-block d-lg-block">
+        <div id="sidebar" class="d-none sidebar_side p-4 d-md-block d-lg-block">
 
             <h5 class="mb-1" >Dashboard</h5>
             <hr class="bg-dark">
@@ -104,10 +112,10 @@ include "header.php";
 
             <hr>
 
-            <a href="#" class="text-uppercase"><p>All savings</p></a>
-            <a href="#" class="text-uppercase"><p>All loans</p></a>
-            <a href="#" class="text-uppercase"><p>Events</p></a>
-            <a href="applyloan.php" class="text-uppercase"><p>Loan Applications</p></a>
+            <a href="#" class="text-uppercase text-decoration-none"><p>All savings</p></a>
+            <a href="#" class="text-uppercase text-decoration-none"><p>All loans</p></a>
+            <a href="#" class="text-uppercase text-decoration-none"><p>Events</p></a>
+            <a href="applyloan.php" class="text-uppercase text-decoration-none"><p>Loan Applications</p></a>
         </div>
 
 
