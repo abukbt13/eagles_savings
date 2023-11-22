@@ -1,3 +1,57 @@
+<?php
+session_start();
+$user_id = $_SESSION['user_id'];
+include 'connection.php';
+$sql = "select * from users where  id = $user_id";
+$sqlrun= mysqli_query($conn,$sql);
+$user_details = mysqli_fetch_all($sqlrun, MYSQLI_ASSOC);
+foreach ($user_details as $user) {
+    $fname = $user['first_name'];
+    $lname = $user['last_name'];
+    $email = $user['email'];
+    $phone= $user['phone'];
+    $initialpicture= $user['profile'];
+}
+if(isset($_POST["edit"])) {
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $phone = $_POST['phone'];
+    $profile = $_FILES['profile']['name'];
+    $profiletmp = $_FILES['profile']['tmp_name'];
+    $profile_new_name = rand().$profile;
+    $path="profiles/";
+    $fullpath=$path.$initialpicture;
+    if(empty($profile)){
+        $update_profile = "update users set first_name = '$fname',last_name='$lname',phone = $phone where id = $user_id";
+        $update_profilerun = mysqli_query($conn, $update_profile);
+        if ($update_profilerun) {
+            $_SESSION['status'] = 'Profile details updated successfully';
+            header('Location:profile.php');
+            die();
+        }
+    }
+    else{
+        $update_profile = "update users set first_name = '$fname',last_name='$lname',phone = $phone,profile='$profile_new_name' where id= $user_id";
+        $update_profilerun = mysqli_query($conn, $update_profile);
+        if($update_profilerun){
+            if(empty($initialpicture)){
+                move_uploaded_file($profiletmp,"profiles/".  $profile_new_name);
+
+            }
+            else{
+                move_uploaded_file($profiletmp,"profiles/".  $profile_new_name);
+                if (file_exists($fullpath)) {
+                    unlink($fullpath);
+                }
+            }
+            $_SESSION['status'] = 'Profile Updated successfully';
+            header('Location:profile.php');
+            die();
+        }
+    }
+}
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,36 +62,7 @@
     <title>Profile</title>
 </head>
 <body>
-<?php
-session_start();
-$user_id = $_SESSION['user_id'];
- include 'header.php';
- include 'connection.php';
-$sql = "select * from users where  id = $user_id";
-$sqlrun= mysqli_query($conn,$sql);
-$user_details = mysqli_fetch_all($sqlrun, MYSQLI_ASSOC);
-foreach ($user_details as $user) {
-    $fname = $user['first_name'];
-    $lname = $user['last_name'];
-    $email = $user['email'];
-    $phone= $user['phone'];
-//    $profile= $user['profile'];
-}
-
-if(isset($_POST["edit"])) {
-    $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
-    $phone = $_POST['phone'];
-    $update_profile = "update users set first_name = '$fname',last_name='$lname',phone = $phone where id= $user_id ";
-    $update_profilerun = mysqli_query($conn, $update_profile);
-    if($update_profilerun){
-        $_SESSION['status'] = 'Profile Updated successfully ';
-        header('Location:profile.php');
-        die();
-    }
-}
-?>
-
+<?php include 'header.php';?>
 
 <!-- Modal -->
 <div class="">
@@ -52,7 +77,7 @@ if(isset($_POST["edit"])) {
             unset($_SESSION['status']);
         }
         ?>
-<!--        <img style="border-radius: 50%;" src="eagle.jpeg" alt="" width="300" height="300" >-->
+        <img style="border-radius: 50%;"  src="profiles/<?php echo $initialpicture; ?>" alt="" width="300" height="300" >
         <table style="width: 20rem;" class="table border">
             <tr class="border">
                 <td class="border">
@@ -92,7 +117,7 @@ if(isset($_POST["edit"])) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="profile.php" method="post">
+                <form action="profile.php" method="post" enctype="multipart/form-data">
 
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">First Name</label>
@@ -105,6 +130,11 @@ if(isset($_POST["edit"])) {
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Phone number</label>
                         <input type="number" name="phone" class="form-control" value="<?php echo $phone; ?>"aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Initial Profile</label>
+                        <img src="profiles/<?php echo $initialpicture; ?>" width="120" height="120" alt="">
+                        <input type="file" name="profile" class="form-control">
                     </div>
 
                     <button type="submit" name="edit" class="btn btn-primary float-end"> Update profile </button>
