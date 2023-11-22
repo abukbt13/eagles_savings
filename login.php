@@ -1,11 +1,12 @@
-<?php include 'header.php';
+<?php
+session_start();
+include 'header.php';
 ?>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body style="background-size: cover;background-color: white;height: 90vh;">

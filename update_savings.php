@@ -21,9 +21,6 @@ if(isset($_POST["update_savings"])) {
     $date = date('d-m-y');
     $actual_amount=$new_amount+$old_amount;
     $weekNumber = date('W');
-
-
-echo $date;
         $update_saving = "update savings set amount = $actual_amount,date='$date' where user_id= $savings_user_id ";
         $update_savingrun = mysqli_query($conn, $update_saving);
         if($update_savingrun){

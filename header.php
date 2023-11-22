@@ -10,14 +10,16 @@ li:hover{
     cursor: pointer;
 }
 </style>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="head   mx-2 d-md-flex d-lg-flex  justify-content-between align-items-center  bg-light">
     <h2 style="font-size: 18px;">Eagles Savings
-        <div id="menu" style="background: yellow; padding: 0.3rem" class="border d-block d-lg-none d-md-none border-primary float-end" aria-label="Close">Menu</div>
+        <div id="menu" style="padding: 0.3rem" class="border d-block d-lg-none d-md-none border-primary float-end" aria-label="Close"><i style="font-size: 27px; color: blue;" class="fa fa-bars" aria-hidden="true"></i></div>
         <div id="close" style="background: yellow; padding: 0.3rem" class="border d-none d-lg-none d-md-none  border-primary float-end" aria-label="Close">Close</div>
 
     </h2>
     <div id="nav_bar" class="d-none d-md-block d-lg-block">
-      <ul style="list-style: none;" class="d-block d-sm-flex d-lg-flex">
+      <ul style="list-style: none;" class="d-block align-items-center d-sm-flex d-lg-flex">
           <li>
               <a href="login.php" class="btn btn-success">
                   Login
@@ -35,8 +37,9 @@ li:hover{
               </a>
           </li>
           <li>
-              <img src="eagle.jpeg" width="40" height="40" alt="">
-              view
+              <a style="text-decoration: none" href="profile.php">
+                  <i style="font-size: 29px;" class="fa fa-user-circle" aria-hidden="true">Profile</i>
+              </a>
           </li>
       </ul>
     </div>
@@ -44,4 +47,4 @@ li:hover{
 <script src="app.js">
 
 
-</script>
+</script><script src="js/app.js"></script>

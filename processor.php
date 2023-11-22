@@ -88,6 +88,6 @@ if (isset($_POST['login'])) {
     else {
         session_start();
         $_SESSION['status'] = "The credentials does not match";
-        header("Location:signin.php");
+        header("Location:login.php");
     }
 }
