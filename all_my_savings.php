@@ -75,7 +75,10 @@ include "header.php";
             <hr>
             <h2>Savings</h2>
             <a href="dashboard.php" class="text-uppercase text-decoration-none"><p>This weeks</p></a>
-            <a href="all_my_savings.php" class="text-uppercase text-decoration-none"><p>all_my_savings</p></a>
+            <a href="all_my_savings.php" class="text-uppercase nav-link active text-decoration-none"><p>all_my_savings</p></a>
+            <h2>Loans</h2>
+            <a href="myloans.php" class="text-uppercase text-decoration-none"><p>My loans</p></a>
+            <a href="applyloan.php" class="text-uppercase text-decoration-none"><p>Apply loan</p></a>
             <h2>Loans</h2>
             <a href="myloans.php" class="text-uppercase text-decoration-none"><p>My loans</p></a>
             <a href="applyloan.php" class="text-uppercase text-decoration-none"><p>Apply loan</p></a>

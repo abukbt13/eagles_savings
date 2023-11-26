@@ -9,6 +9,26 @@ if (!isset($_SESSION['user_id'])) {
 $user_id= $_SESSION['user_id'];
 $last_name = $_SESSION['last_name'] ;
 $first_name = $_SESSION['first_name'] ;
+
+if(isset($_POST["create_message"])) {
+    $message = $_POST['message'];
+    $title = $_POST['title'];
+    $date = date('d-m-y');
+
+    $save = "insert into messages(message,title,date,user_id) values('$message','$title','$date',$user_id)";
+    $res = mysqli_query($conn, $save);
+
+    if($save){
+        $_SESSION['status'] = 'message create successfully';
+        header('Location:my_messages.php');
+        die();
+    }
+    else{
+        $_SESSION['status'] = 'An error occurred try again later';
+        header('Location:my_messages.php');
+        die();
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -17,7 +37,7 @@ $first_name = $_SESSION['first_name'] ;
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My loans</title>
+    <title>Messages</title>
     <link rel="shortcut icon" href="/img.jpg">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -34,7 +54,7 @@ include "header.php";
             top: 1rem;
         }
 
-        .loan{
+        .message{
             width: 23rem;
             position: absolute;
             top: 5rem;
@@ -45,7 +65,7 @@ include "header.php";
             display: none;
         }
         @media (min-width: 300px) and (max-width: 600px) {
-            .loan {
+            .message {
                 width: 16rem;
                 position: absolute;
                 top: 2rem;
@@ -77,10 +97,10 @@ include "header.php";
             <a href="dashboard.php" class="text-uppercase text-decoration-none"><p>This weeks</p></a>
             <a href="all_my_savings.php" class="text-uppercase text-decoration-none"><p>all_my_savings</p></a>
             <h2>Loans</h2>
-            <a href="myloans.php" class="text-uppercase nav-link active text-decoration-none"><p>My loans</p></a>
+            <a href="myloans.php" class="text-uppercase text-decoration-none"><p>My loans</p></a>
             <a href="applyloan.php" class="text-uppercase text-decoration-none"><p>Apply loan</p></a>
             <h2>Messages</h2>
-            <a href="my_messages.php" class="text-uppercase text-decoration-none"><p>Create Messages</p></a>
+            <a href="my_messages.php" class="text-uppercase nav-link active text-decoration-none"><p>Create Messages</p></a>
             <a href="my_messages.php" class="text-uppercase text-decoration-none"><p>My Messages</p></a>
 
         </div>
@@ -90,59 +110,68 @@ include "header.php";
             <table class="table border table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th colspan="5" class="text-center">All savings
-                    <button class="btn btn-success float-end">Apply Loan Now</button>
+                    <th colspan="5" class="text-center">
+                        My messages
+                        <button class="btn btn-primary float-end" onclick="showForm()">Create message</button>
                     </th>
                 </tr>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Date saved</th>
-                    <th scope="col">Week of savings</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Date created</th>
+                    <th scope="col">status</th>
                     <th scope="col">Operations</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                $savings = "SELECT * FROM loans WHERE user_id = $user_id";
-                $savingsrun = mysqli_query($conn, $savings);
-                $num_loans = mysqli_num_rows($savingsrun);
-                $id = 1;
-                if ($num_loans > 0) {
-                    while ($saves = mysqli_fetch_assoc($savingsrun)) {
-                        ?>
-                        <tr>
-                            <th><?php echo $id++ ?></th>
-                            <th><?php echo $saves['amount'] ?></th>
-                            <td><?php echo $saves['date_borrowed'] ?></td>
-                            <td><?php echo $saves['week'] ?></td>
-                            <td><button class="btn btn-success">query</button></td>
-                        </tr>
-                        <?php
-                    }
-                } else {
+                $savings="SELECT * FROM messages where user_id='$user_id'";
+                $savingsrun=mysqli_query($conn,$savings);
+                $id=1;
+                while($message=mysqli_fetch_assoc($savingsrun)) {
                     ?>
                     <tr>
-                        <th colspan="5">You dont have any loans records? Apply Loan Now
-
-
-                        </th>
+                        <th><?php echo $id++ ?></th>
+                        <th ><?php echo $message['title'] ?></th>
+                        <td><?php echo $message['message'] ?></td>
+                        <td><?php echo $message['date'] ?></td>
+                        <td><?php echo $message['status'] ?></td>
+                        <td><button class="btn btn-success">View</button></td>
                     </tr>
                     <?php
                 }
                 ?>
-                </tbody>
 
+                </tbody>
 
             </table>
         </div>
 
     </div>
 
+
+    <div id="message" class="message  rounded">
+        <button type="button" onclick="closeBtn()" class="btn-close float-end" aria-label="Close"></button>
+
+        <form action="my_messages.php" method="post">
+            <p style="font-size: 20px" class="text-primary">Contact Admin for help or Queries</p>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Title</label>
+                <input type="text" min="1" class="form-control" name="title">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Message</label>
+                <textarea name="message"  class="form-control" rows="5"></textarea>
+            </div>
+            <button type="submit" name="create_message" class="btn btn-primary float-end">Submit</button>
+
+        </form>
+    </div>
     </body>
 
 
-    <script src="admin.js">
+    <script src="messages.js">
 
     </script>
 </html>

@@ -1,12 +1,8 @@
 <?php
 session_start();
-$last_name = $_SESSION['last_name'] ;
-$first_name = $_SESSION['first_name'] ;
 include 'connection.php';
-if ($_SESSION['role'] != 1) {
-    header('Location: dashboard.php');
-    exit(); // It's a good practice to include exit() after header() to ensure no further code execution after redirection
-}
+
+
 
 if (!isset($_SESSION['user_id'])) {
     session_start();
@@ -14,12 +10,19 @@ if (!isset($_SESSION['user_id'])) {
     header('Location:login.php');
 }
 
-if(isset($_POST["update_savings"])) {
-$amount = $_POST['amount'];
-$savings_user_id = $_POST['user_id'];
-    $date = date('d-m-y');
-    $weekNumber = date('W');
+if ($_SESSION['role'] != 1) {
+    session_start();
+    header('Location: dashboard.php');
+    exit(); // It's a good practice to include exit() after header() to ensure no further code execution after redirection
+}
+$last_name = $_SESSION['last_name'] ;
+$first_name = $_SESSION['first_name'] ;
 
+if(isset($_POST["update_savings"])) {
+    $amount = $_POST['amount'];
+    $savings_user_id = $_POST['user_id'];
+    $date = $_POST['date'];
+    $weekNumber = date('W', strtotime($date));
     $find_ifSaved = "SELECT * FROM savings WHERE user_id = $savings_user_id AND week = $weekNumber";
     $result = mysqli_query($conn, $find_ifSaved); // Make sure to replace $your_db_connection with your actual database connection variable
 
@@ -28,10 +31,10 @@ $savings_user_id = $_POST['user_id'];
     if ($exist_saving > 0) {
         $_SESSION['status'] = 'Savings already done, please update savings';
         $_SESSION['savings_user_id'] = $savings_user_id;
+        $_SESSION['week'] = $weekNumber;
         header('Location: update_savings.php');
         exit(); // It's good practice to include exit() after header() to ensure no further code execution after redirection
     }
-
     else{
         $save = "insert into savings(amount,user_id,week,date) values('$amount','$savings_user_id','$weekNumber','$date')";
         $res = mysqli_query($conn, $save);
@@ -39,10 +42,12 @@ $savings_user_id = $_POST['user_id'];
             $_SESSION['status'] = 'Successfully saved ';
             header('Location:admin.php');
         }
+        else{
+            $_SESSION['status'] = 'Error saving the records';
+            die();
+        }
     }
 }
-
-include "header.php";
 ?>
 <!doctype html>
 <html lang="en">
@@ -55,6 +60,10 @@ include "header.php";
     <link rel="shortcut icon" href="/img.jpg">
     <link rel="stylesheet" href="css/style.css">
 </head>
+<?php
+include "header.php";
+
+?>
 <div>
     <style>
         .sidebar{
@@ -114,10 +123,10 @@ include "header.php";
             <h3>Loans</h3>
             <a href="all_loans.php" class="text-uppercase text-decoration-none"><p>all loans</p></a>
             <a href="loan_application.php" class="text-uppercase text-decoration-none"><p>Loan Applications</p></a>
-            <h2>Events</h2>
-            <a href="events.php" class="text-uppercase text-decoration-none"><p>Recent Events</p></a>
-            <h3>Plans And Activities</h3>
-            <a href="plans.php" class="text-uppercase text-decoration-none"><p>Plans</p></a>
+            <h2>Inquiries</h2>
+            <a href="view_messages.php" class="text-uppercase text-decoration-none"><p>View Messages</p></a>
+
+
         </div>
 
 
@@ -147,17 +156,17 @@ include "header.php";
                 $savingsrun=mysqli_query($conn,$savings);
                 $id=1;
                 while($saves=mysqli_fetch_assoc($savingsrun)) {
-                ?>
-                <tr>
-                    <th><?php echo $id++; ?></th>
-                    <th><?php echo $saves['first_name']?></th>
-                    <th><?php echo $saves['last_name']?></th>
-                    <th><?php echo $saves['amount']?></th>
-                    <th><?php echo $saves['date']?></th>
-                    <th><?php echo $saves['week']?></th>
+                    ?>
+                    <tr>
+                        <th><?php echo $id++; ?></th>
+                        <th><?php echo $saves['first_name']?></th>
+                        <th><?php echo $saves['last_name']?></th>
+                        <th><?php echo $saves['amount']?></th>
+                        <th><?php echo $saves['date']?></th>
+                        <th><?php echo $saves['week']?></th>
 
-                    <th scope="col"><button class="btn btn-primary float-end">Edit</button></th></td>
-                </tr>
+                        <th scope="col"><button class="btn btn-primary float-end">Edit</button></th></td>
+                    </tr>
                     <?php
                 }
                 ?>
@@ -171,37 +180,41 @@ include "header.php";
     </body>
 
 
-        <div id="loan" class="loan  rounded">
-            <button type="button" onclick="closeBtn()" class="btn-close float-end" aria-label="Close"></button>
+    <div id="loan" class="loan  rounded">
+        <button type="button" onclick="closeBtn()" class="btn-close float-end" aria-label="Close"></button>
 
-            <form action="admin.php" method="post">
-                <h2 class="text-primary" style="text-align: center;">Savings Records</h2>
+        <form action="admin.php" method="post">
+            <h2 class="text-primary" style="text-align: center;">Savings Records</h2>
 
 
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Member Name</label>
-                    <select name="user_id" id="" class="form-control">
-                        <?php $users="select * from users";
-                        $usersrun=mysqli_query($conn,$users);
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Member Name</label>
+                <select name="user_id" id="" class="form-control">
+                    <?php $users="select * from users";
+                    $usersrun=mysqli_query($conn,$users);
 
-                        while($allUsers=mysqli_fetch_assoc($usersrun)) {
+                    while($allUsers=mysqli_fetch_assoc($usersrun)) {
                         ?>
                         <option value="<?php echo $allUsers['id']; ?>"><?php echo $allUsers['first_name']; echo" "; echo $allUsers['last_name']; ?></option>
-                            <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Amount in Shillings</label>
-                    <input type="number" min="1" class="form-control" name="amount">
-                </div>
+                        <?php
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Amount in Shillings</label>
+                <input type="number" min="1" class="form-control" name="amount">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Date</label>
+                <input type="date" min="1" class="form-control" name="date">
+            </div>
 
 
-                <button type="submit" name="update_savings" class="btn btn-primary w-100">Add Saving</button>
+            <button type="submit" name="update_savings" class="btn btn-primary w-100">Add Saving</button>
 
-            </form>
-        </div>
+        </form>
+    </div>
     <script src="admin.js">
 
     </script>

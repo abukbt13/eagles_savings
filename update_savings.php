@@ -7,31 +7,35 @@ if (!isset($_SESSION['user_id'])) {
     header('Location:login.php');
 }
 $savings_user_id = $_SESSION['savings_user_id'];
-$saver = "select * from savings  where user_id = $savings_user_id";
+$weekNumber = $_SESSION['week'];
+$saver = "select * from savings  where user_id = $savings_user_id and week = $weekNumber";
 $saverrun = mysqli_query($conn, $saver);
 
 $initial_amount=mysqli_fetch_array($saverrun);
 
 $old_amount=$initial_amount['amount'];
-echo $old_amount;
+
+
 if(isset($_POST["update_savings"])) {
-//    echo "hello";
     $new_amount = $_POST['new_amount'];
-//echo $new_amount;
     $date = date('d-m-y');
     $actual_amount=$new_amount+$old_amount;
-    $weekNumber = date('W');
-        $update_saving = "update savings set amount = $actual_amount,date='$date' where user_id= $savings_user_id ";
+
+        $update_saving = "update savings set amount = $actual_amount,date='$date' where user_id= $savings_user_id and week = $weekNumber";
         $update_savingrun = mysqli_query($conn, $update_saving);
         if($update_savingrun){
-
-
             $_SESSION['status'] = 'Successfully Updated saved ';
             header('Location:admin.php');
             die();
         }
+        else{
+            $_SESSION['status'] = 'Error saving the records';
+            header('Location:admin.php');
+            die();
+        }
 }
-
+echo $weekNumber;
+echo $savings_user_id;
 include "header.php";
 ?>
 <!doctype html>
@@ -41,7 +45,7 @@ include "header.php";
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin Dashboard</title>
+    <title>Update savings</title>
     <link rel="shortcut icon" href="/img.jpg">
     <link rel="stylesheet" href="css/style.css">
 </head>

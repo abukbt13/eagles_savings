@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (!isset($_SESSION['user_id'])) {
+    session_start();
+    $_SESSION['status'] = 'lOGIN TO VIEW THIS PAGE';
+    header('Location:login.php');
+}
 $user_id = $_SESSION['user_id'];
 include 'connection.php';
 $sql = "select * from users where  id = $user_id";

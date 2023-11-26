@@ -74,13 +74,14 @@ include "header.php";
             <h5 class="mb-1">Dashboard</h5>
             <hr>
             <h2>Savings</h2>
-            <a href="#" class="text-uppercase text-decoration-none"><p>This weeks</p></a>
+            <a href="dashboard.php" class="text-uppercase nav-link active text-decoration-none"><p>This weeks</p></a>
             <a href="all_my_savings.php" class="text-uppercase text-decoration-none"><p>all_my_savings</p></a>
             <h2>Loans</h2>
             <a href="myloans.php" class="text-uppercase text-decoration-none"><p>My loans</p></a>
             <a href="applyloan.php" class="text-uppercase text-decoration-none"><p>Apply loan</p></a>
             <h2>Messages</h2>
-            <a href="my_messages.php" class="text-uppercase text-decoration-none"><p>Messages</p></a>
+            <a href="my_messages.php" class="text-uppercase text-decoration-none"><p>Create Messages</p></a>
+            <a href="my_messages.php" class="text-uppercase text-decoration-none"><p>My Messages</p></a>
 
         </div>
 
