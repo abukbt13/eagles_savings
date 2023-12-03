@@ -14,13 +14,13 @@ if(isset($_POST["register"])) {
     if ($fname == "" || $lname == "" || $email == "") {
         session_start();
         $_SESSION['status'] = 'All inputs are required';
-        header("Location:register.php");
+        header("location:auth/register.php");
     } else {
 
         if ($count2 > 0) {
             session_start();
             $_SESSION['status'] = 'Email already exist';
-            header("location:register.php");
+            header("location:auth/register.php");
         }
         else {
             $save = "insert into users(first_name,last_name,phone,email,password) values('$fname','$lname','$phone','$email','$password')";
@@ -31,12 +31,12 @@ if(isset($_POST["register"])) {
                 $_SESSION['status'] = 'Successfully registered login now';
                 //the password was correct
 
-                header("location:login.php");
+                header("location:/auth/login.php");
             }
             else {
                 session_start();
                 $_SESSION['status'] = 'Something went wrong';
-                header("location:register.php");
+                header("location:auth/register.php");
             }
         }
     }
@@ -70,7 +70,7 @@ if (isset($_POST['login'])) {
             $_SESSION['first_name'] = $fname;
             $_SESSION['last_name'] = $lname;
             $_SESSION['role'] = $role;
-            header("location:admin.php");
+            header("location:/admin/index.php");
         }
         else{
             session_start();
@@ -79,7 +79,7 @@ if (isset($_POST['login'])) {
             $_SESSION['first_name'] = $fname;
             $_SESSION['last_name'] = $lname;
             $_SESSION['role'] = $role;
-            header("location:dashboard.php");
+            header("location:/user/index.php");
         }
 
 
@@ -88,6 +88,6 @@ if (isset($_POST['login'])) {
     else {
         session_start();
         $_SESSION['status'] = "The credentials does not match";
-        header("Location:login.php");
+        header("Location:/auth/login.php");
     }
 }

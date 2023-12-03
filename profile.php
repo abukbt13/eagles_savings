@@ -23,7 +23,7 @@ if(isset($_POST["edit"])) {
     $phone = $_POST['phone'];
     $profile = $_FILES['profile']['name'];
     $profiletmp = $_FILES['profile']['tmp_name'];
-    $profile_new_name = rand().$profile;
+    $profile_new_name =  rand().$profile;
     $path="profiles/";
     $fullpath=$path.$initialpicture;
     if(empty($profile)){
@@ -67,7 +67,7 @@ if(isset($_POST["edit"])) {
     <title>Profile</title>
 </head>
 <body>
-<?php include 'header.php';?>
+<?php include 'includes/header.php';?>
 
 <!-- Modal -->
 <div class="">
