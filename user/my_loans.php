@@ -1,13 +1,8 @@
 <?php
 session_start();
-$last_name = $_SESSION['last_name'] ;
-$first_name = $_SESSION['first_name'] ;
 include '../connection.php';
-if (!isset($_SESSION['user_id'])) {
-    session_start();
-    $_SESSION['status'] = 'lOGIN TO VIEW THIS PAGE';
-    header('Location:login.php');
-}
+
+include '../includes/session.php';
 $user_id = $_SESSION['user_id'];
 
 if(isset($_POST["apply_loan"])) {

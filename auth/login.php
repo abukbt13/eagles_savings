@@ -37,7 +37,7 @@ include '../includes/header.php';
                         <label for="exampleInputPassword1" class="form-label">Password</label>
                         <input type="password" name="password" class="form-control" id="exampleInputPassword1">
                     </div>
-                    <p>Don't remember password? <a class="" href="forgetpassword.php">Reset</a></p>
+                    <p>Don't remember password? <a class="" href="forget_password.php">Reset</a></p>
 
                     <div class="d-flex justify-content-between">
                         <button type="submit" name="login" class="btn w-100 btn-primary">Login</button>

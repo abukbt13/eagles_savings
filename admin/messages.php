@@ -100,6 +100,7 @@ include "../includes/header.php";
             <a href="users.php" class="text-uppercase   text-decoration-none"><p>Users</p></a>
             <a href="savings.php" class="text-uppercase  text-decoration-none"><p>savings</p></a>
             <a href="loans.php" class="text-uppercase  text-decoration-none"><p>Loans</p></a>
+            <a href="groupsmoney.php" class="text-uppercase  text-decoration-none"><p>Groups Money</p></a>
             <a href="loan_applications.php" class="text-uppercase  text-decoration-none"><p>Loan Applications</p></a>
             <a href="messages.php" class="text-uppercase nav-link nav-active  text-decoration-none"><p>Messages</p></a>
         </div>
@@ -110,24 +111,23 @@ include "../includes/header.php";
                 <thead>
                 <tr>
                     <th colspan="7" class=""><div class=" d-flex align-items-center justify-content-between">
-                            <h2>Loans</h2>
-                            <button class="btn btn-primary float-end" onclick="showForm()">Add Loan</button>
+                            <h2>Messages</h2>
+
                         </div> </th>
                 </tr>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">First name</th>
                     <th scope="col">Last Name</th>
-                    <th scope="col">Savings</th>
+                    <th scope="col">Message</th>
                     <th scope="col">Date</th>
-                    <th scope="col">Week</th>
                     <th scope="col">Operation</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
                 $week=date('W');
-                $savings="SELECT * FROM loans JOIN users ON loans.user_id = users.id";
+                $savings="SELECT * FROM messages JOIN users ON messages.user_id = users.id";
                 $savingsrun=mysqli_query($conn,$savings);
                 $id=1;
                 while($saves=mysqli_fetch_assoc($savingsrun)) {
@@ -135,12 +135,16 @@ include "../includes/header.php";
                     <tr>
                         <th><?php echo $id++; ?></th>
                         <th><?php echo $saves['first_name']?></th>
-                        <th><?php echo $saves['last_name']?></th>
-                        <th><?php echo $saves['amount']?></th>
-                        <th><?php echo $saves['date_borrowed']?></th>
-                        <th><?php echo $saves['week']?></th>
+                        <th><?php echo $saves['last_name']?></th><th>
+                            <p><?php echo implode(' ', array_slice(str_word_count($saves['message'], 1), 0, 10));echo "....."; ?></p>
+                        </th>
 
-                        <th scope="col"><button class="btn btn-primary float-end">Edit</button></th></td>
+                        <th><?php echo $saves['date']?></th>
+
+                        <th scope="col">
+                            <button class="btn btn-primary float-end">view</button>
+                        </th>
+                        </td>
                     </tr>
                     <?php
                 }
@@ -155,38 +159,6 @@ include "../includes/header.php";
     </body>
 
 
-    <div id="loan" class="loan  rounded">
-        <button type="button" onclick="closeBtn()" class="btn-close float-end" aria-label="Close"></button>
-
-        <form action="all_loans.php" method="post">
-            <h2 class="text-primary" style="text-align: center;">Savings Records</h2>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Member Name</label>
-                <select name="user_id" id="" class="form-control">
-                    <?php $users="select * from users";
-                    $usersrun=mysqli_query($conn,$users);
-
-                    while($allUsers=mysqli_fetch_assoc($usersrun)) {
-                        ?>
-                        <option value="<?php echo $allUsers['id']; ?>"><?php echo $allUsers['first_name']; echo" "; echo $allUsers['last_name']; ?></option>
-                        <?php
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Loan Amount in KSH</label>
-                <input type="number" min="1" class="form-control" name="amount">
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Date</label>
-                <input type="date"  class="form-control" name="date">
-            </div>
-            <button type="submit" name="add_loan" class="btn btn-primary w-100">Add Loan</button>
-
-        </form>
-    </div>
     <script src="../../js/admin.js">
-
     </script>
 </html>

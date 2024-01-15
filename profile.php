@@ -3,7 +3,7 @@ session_start();
 if (!isset($_SESSION['user_id'])) {
     session_start();
     $_SESSION['status'] = 'lOGIN TO VIEW THIS PAGE';
-    header('Location:login.php');
+    header('Location:auth/login.php');
 }
 $user_id = $_SESSION['user_id'];
 include 'connection.php';
@@ -23,7 +23,7 @@ if(isset($_POST["edit"])) {
     $phone = $_POST['phone'];
     $profile = $_FILES['profile']['name'];
     $profiletmp = $_FILES['profile']['tmp_name'];
-    $profile_new_name =  rand().$profile;
+    $profile_new_name = rand().$profile;
     $path="profiles/";
     $fullpath=$path.$initialpicture;
     if(empty($profile)){

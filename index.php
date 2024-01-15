@@ -26,6 +26,17 @@
 
 </style>
 <?php include 'includes/header.php' ?>
+<?php
+session_start();
+if(isset($_SESSION['status'])){
+    ?>
+    <div>
+        <p class="text-white bg-success  p-2"><?php echo $_SESSION['status']; ?> ?</p>
+    </div>
+    <?php
+    unset($_SESSION['status']);
+}
+?>
  <div  class="main d-flex flex-column align-items-center justify-content-center">
    <div class="main-section">
        <h1 style="text-align: center; font-size: 22px; color:white;">Eagles Savings</h1>

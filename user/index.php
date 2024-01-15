@@ -1,14 +1,14 @@
 <?php
 session_start();
 include '../connection.php';
-if (!isset($_SESSION['user_id'])) {
-    session_start();
-    $_SESSION['status'] = 'lOGIN TO VIEW THIS PAGE';
-    header('Location:../auth/login.php');
-}
+
+include '../includes/session.php';
 $user_id= $_SESSION['user_id'];
 $last_name = $_SESSION['last_name'] ;
 $first_name = $_SESSION['first_name'] ;
+$path="profiles/";
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -82,6 +82,7 @@ include "../includes/header.php";
     <div class="contents  d-md-flex d-lg-flex">
         <button class="d-md-none d-lg-none d-sm-block" style="color: blue;border:none;padding-right:0.5rem;margin:0.6rem;font-size: 23px;" onclick="sideBar()">
             <i  class="fa fa-list" aria-hidden="true">
+                show
             </i>
         </button>
         <div id="sidebar" class="d-none px-4 d-md-block d-lg-block">
@@ -97,6 +98,7 @@ include "../includes/header.php";
 
             <a href="my_loans.php" class="text-uppercase text-decoration-none"><p>My loans</p></a>
             <a href="my_messages.php" class="text-uppercase  text-decoration-none"><p>Messages</p></a>
+            <a href="report.php" class="text-uppercase  text-decoration-none"><p>Report</p></a>
         </div>
 
         <div  style="" class="main">
@@ -143,6 +145,14 @@ include "../includes/header.php";
             </div>
 
         </div>
+       <div class="">
+         <h2>Upload your picture let others see your picture </h2>
+        <form action="processor.php" method="post" enctype="multipart/form-data">
+            <label for="">Upload your image Here</label>
+            <input type="file" name="profileimage" placeholder="Upload image">
+            <button type="submit" name="picture" class="btn btn-primary">Upload</button>
+        </form>
+    </div>
 
     </div>
 

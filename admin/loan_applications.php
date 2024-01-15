@@ -1,17 +1,16 @@
 <?php
 session_start();
-$last_name = $_SESSION['last_name'] ;
-$first_name = $_SESSION['first_name'] ;
 include '../connection.php';
+
+
+include '../includes/session.php';
 if ($_SESSION['role'] != 1) {
     header('Location: dashboard.php');
     exit(); // It's a good practice to include exit() after header() to ensure no further code execution after redirection
 }
-
-if (!isset($_SESSION['user_id'])) {
-    session_start();
-    $_SESSION['status'] = 'lOGIN TO VIEW THIS PAGE';
-    header('Location:login.php');
+if ($_SESSION['role'] != 1) {
+    header('Location: dashboard.php');
+    exit(); // It's a good practice to include exit() after header() to ensure no further code execution after redirection
 }
 
 if(isset($_POST["add_loan"])) {
@@ -101,6 +100,7 @@ include "../includes/header.php";
             <a href="users.php" class="text-uppercase   text-decoration-none"><p>Users</p></a>
             <a href="savings.php" class="text-uppercase  text-decoration-none"><p>savings</p></a>
             <a href="loans.php" class="text-uppercase   text-decoration-none"><p>Loans</p></a>
+            <a href="groupsmoney.php" class="text-uppercase  text-decoration-none"><p>Groups Money</p></a>
             <a href="loan_applications.php" class="text-uppercase nav-link nav-active text-decoration-none"><p>Loan Applications</p></a>
             <a href="messages.php" class="text-uppercase  text-decoration-none"><p>Messages</p></a>
         </div>

@@ -1,0 +1,45 @@
+
+.sidebar{
+    background: yellow;
+    display: block;
+    position: absolute;
+    left: 2rem;
+    top: 1rem;
+}
+
+.loan{
+    width: 23rem;
+    position: absolute;
+    top: 5rem;
+    left: 15rem;
+    background: grey;
+    z-index: 0.2;
+    padding: 2rem;
+    display: none;
+}
+.main{
+    display: grid;grid-template-columns: 1fr 1fr 1fr;
+}
+.main_content{
+    border: 1px solid pink;
+    margin: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+@media (min-width: 300px) and (max-width: 600px) {
+    .loan {
+        width: 16rem;
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        background: grey;
+        z-index: 0.2;
+        padding: 2rem;
+        display: none;
+    }
+}
+.sidebar_side a:hover{
+    background: grey;
+}

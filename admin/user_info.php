@@ -116,18 +116,20 @@ include "../includes/header.php";
             <table class="table  border table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th colspan="5" class="">
+                    <th colspan="7" class="">
                         <div class=" d-flex align-items-center justify-content-between">
-                            Users savings
+                            <P>
+                                <b>ABRAHAM S</b> savings
+                            </P>
                         </div>
                     </th>
                 </tr>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Savings</th>
-                    <th scope="col">Actual savings</th>
                     <th scope="col">Date</th>
                     <th scope="col">Week</th>
+                    <th COLSPAN="2" scope="col">OPERATIONS</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -145,21 +147,24 @@ include "../includes/header.php";
                     <tr>
                         <th><?php echo $id++; ?></th>
                         <th><?php echo $saves['amount'] ?></th>
-                        <th><?php echo $saves['actual'] ?></th>
                         <th><?php echo $saves['date'] ?></th>
                         <th><?php echo $saves['week'] ?></th>
+                        <th>
+                            <form action="edit_savings.php" method="post">
+                                <input hidden value="<?php echo $saves['savings_id'] ?>" name="savings_id" type="number">
+                                <input type="submit" name="edit_save" class="btn btn-primary" value="Edit info">
+                            </form>
+                        </th>
+                        <th><button class="btn btn-danger">Delete</button></th>
                     </tr>
                     <?php
                     $total += $saves['amount']; // Add the amount to the total
-                    $actual += $saves['actual']; // Add the amount to the total
                 }
                 ?>
                 <tr>
-                    <td colspan="5"><h2>Total savings <span class="float-end"><?php echo $total; ?></span></h2></td>
+                    <td colspan="7"><h2>Total savings <span class="float-end"><?php echo $total; ?></span></h2></td>
                 </tr>
-                <tr>
-                    <td colspan="5"><h2>Total Actual after 0.005% deduction <span class="float-end"><?php echo $actual; ?></span></h2></td>
-                </tr>
+
                 </tbody>
                 </tbody>
 

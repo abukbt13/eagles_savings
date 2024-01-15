@@ -60,43 +60,6 @@ if(isset($_POST["addSavings"])) {
 <?php
 include "../includes/header.php";
 ?>
-<div>
-    <style>
-        .sidebar{
-            background: yellow;
-            display: block;
-            position: absolute;
-            left: 2rem;
-            top: 1rem;
-        }
-
-        .loan{
-            width: 23rem;
-            position: absolute;
-            top: 5rem;
-            left: 15rem;
-            background: grey;
-            z-index: 0.2;
-            padding: 2rem;
-            display: none;
-        }
-        @media (min-width: 300px) and (max-width: 600px) {
-            .loan {
-                width: 16rem;
-                position: absolute;
-                top: 2rem;
-                left: 2rem;
-                background: grey;
-                z-index: 0.2;
-                padding: 2rem;
-                display: none;
-            }
-        }
-        .sidebar_side a:hover{
-            background: ;
-        }
-
-    </style>
     <?php
     if(isset($_SESSION['status'])){
         ?>
@@ -108,30 +71,14 @@ include "../includes/header.php";
     }
     ?>
     <div class="contents  d-md-flex d-lg-flex">
-        <button class="d-md-none d-lg-none d-sm-block" style="color: blue;border:none;padding-right:0.5rem;margin:0.6rem;font-size: 23px;" onclick="sideBar()">
-            <i  class="fa fa-list" aria-hidden="true">
-            </i>
-        </button>
-        <div id="sidebar" class="d-none sidebar_side p-4 d-md-block d-lg-block">
-
-            <h1 class="mb-1 border-bottom">Dashboard</h1>
-            <hr>
-            <a href="index.php" class="text-uppercase   text-decoration-none"><p>Home</p></a>
-            <a href="users.php" class="text-uppercase nav-link active  text-decoration-none"><p>Users</p></a>
-            <a href="savings.php" class="text-uppercase  text-decoration-none"><p>savings</p></a>
-            <a href="loans.php" class="text-uppercase  text-decoration-none"><p>Loans</p></a>
-            <a href="loan_applications.php" class="text-uppercase  text-decoration-none"><p>Loan Applications</p></a>
-            <a href="messages.php" class="text-uppercase  text-decoration-none"><p>Messages</p></a>
-        </div>
-
+    <?php include 'sidebar.php' ?>
 
         <div class="table-responsive">
             <table class="table  border table-bordered table-striped">
                 <thead>
                 <tr>
                     <th colspan="7" class=""><div class=" d-flex align-items-center justify-content-between">
-                            This savings
-                            <button class="btn btn-primary float-end" onclick="showForm()">Add savings</button>
+                            Users savings details
                         </div> </th>
                 </tr>
                 <tr>
@@ -139,6 +86,7 @@ include "../includes/header.php";
                     <th scope="col">First name</th>
                     <th scope="col">Last Name</th>
                     <th scope="col">Phone</th>
+                    <th scope="col">View payment details</th>
                 </tr>
                 </thead>
                 <tbody>
