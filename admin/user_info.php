@@ -20,6 +20,16 @@ if (!isset($user_id)) {
     $_SESSION['status'] = 'lOGIN TO VIEW THIS PAGE';
     header('Location: index.php');
 }
+if(isset($_POST['delete_record'])){
+    $id = $_POST['id'];
+    $delete="delete from savings where savings_id =$id ";
+    $deleterun=mysqli_query($conn,$delete);
+    if ($deleterun){
+        $_SESSION['status'] = 'Record Deleted successfully';
+        header('Location:users.php');
+        die();
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -150,12 +160,14 @@ include "../includes/header.php";
                         <th><?php echo $saves['date'] ?></th>
                         <th><?php echo $saves['week'] ?></th>
                         <th>
-                            <form action="edit_savings.php" method="post">
-                                <input hidden value="<?php echo $saves['savings_id'] ?>" name="savings_id" type="number">
-                                <input type="submit" name="edit_save" class="btn btn-primary" value="Edit info">
+                            <a class="btn btn-primary" href="edit_savings.php?id=<?php echo $saves['savings_id']; ?>&editinfo=">Edit info</a>
+                        </th>
+                        <th>
+                            <form action="user_info.php" method="post">
+                                <input hidden value="<?php echo $saves['savings_id'] ?>" name="id" type="number">
+                                <input type="submit" name="delete_record" class="btn btn-danger" value="DElETE RECORD">
                             </form>
                         </th>
-                        <th><button class="btn btn-danger">Delete</button></th>
                     </tr>
                     <?php
                     $total += $saves['amount']; // Add the amount to the total

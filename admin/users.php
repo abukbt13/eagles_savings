@@ -108,7 +108,6 @@ include "../includes/header.php";
                                 <input hidden value="<?php echo $saves['id'] ?>" name="user_id" type="number">
                                 <input type="submit" name="user" class="btn btn-primary" value="view">
                             </form>
-                            </a>
                         </th>
                     </tr>
                     <?php

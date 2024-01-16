@@ -58,28 +58,78 @@ if(isset($_SESSION['status'])){
 <div class="contents  d-md-flex d-lg-flex">
     <?php include 'sidebar.php'?>
 
-    <div  style="" class="">
-        <div  class="">
-            <h2 class="text-uppercase">Groups worth</h2>
-            <p>  <?php
-                $sql = "SELECT SUM(amount) AS total_amount FROM groups_money";
-                $res = mysqli_query($conn, $sql);
-                // Fetch the result
-                $row = mysqli_fetch_assoc($res);
-                $totalAmount = $row["total_amount"];
-                if($totalAmount>0){
-                    // Output the total amount
-                    echo "Groups worth at the moment: " . $totalAmount;
-                }
-                else{
-                    echo "There is no money at the moment";
-                }
-                ?>
-            </p>
-            <button class="btn btn-primary float-end" onclick="showForm()">Add Group money</button>
-        </div>
+   <div class="">
+       <div  style="" class="">
+           <div  class="">
+               <h2 class="text-uppercase">Groups worth</h2>
+               <p>  <?php
+                   $sql = "SELECT SUM(amount) AS total_amount FROM groups_money";
+                   $res = mysqli_query($conn, $sql);
+                   // Fetch the result
+                   $row = mysqli_fetch_assoc($res);
+                   $totalAmount = $row["total_amount"];
+                   if($totalAmount>0){
+                       // Output the total amount
+                       echo "Groups worth at the moment: " . $totalAmount;
+                   }
+                   else{
+                       echo "There is no money at the moment";
+                   }
+                   ?>
+                   <button class="btn btn-primary float-end" onclick="showForm()">Add Group money</button>
+               </p>
 
-    </div>
+           </div>
+
+       </div>
+
+       <div class="table-responsive">
+           <table class="table  border table-bordered table-striped">
+               <thead>
+               <tr>
+                   <th colspan="9" class="">
+                           <p>Groups source of money</p>
+                   </th>
+               </tr>
+               <tr>
+                   <th scope="col">#</th>
+                   <th scope="col">Source</th>
+                   <th scope="col">Amount</th>
+                   <th scope="col">From Who</th>
+                   <th scope="col">Date</th>
+               </tr>
+               </thead>
+               <tbody>
+               <?php
+               $week = date('W');
+               $savings = "SELECT * FROM groups_money  order by id  desc";
+               $savingsrun = mysqli_query($conn, $savings);
+               $id = 1;
+               $total = 0;
+
+               while ($saves = mysqli_fetch_assoc($savingsrun)) {
+                   ?>
+                   <tr>
+                       <th><?php echo $id++; ?></th>
+                       <th><?php echo $saves['source'] ?></th>
+                       <th><?php echo $saves['amount'] ?></th>
+                       <th><?php echo $saves['from_who'] ?></th>
+                       <th><?php echo $saves['date'] ?></th>
+
+                   </tr>
+                   <?php
+                   $total += $saves['amount']; // Add the amount to the total
+               }
+               ?>
+               <tr>
+                   <td colspan="8"><h2>Total Group Worth <span class="float-end"><?php echo $total; ?></span></h2></td>
+               </tr>
+               </tbody>
+               </tbody>
+
+           </table>
+       </div>
+   </div>
 
 </div>
 <div id="loan" class="loan  rounded">

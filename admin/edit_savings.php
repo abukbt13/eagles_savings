@@ -9,23 +9,27 @@ if ($_SESSION['role'] != 1) {
     header('Location: ../user/index.php');
     exit(); // It's a good practice to include exit() after header() to ensure no further code execution after redirection
 }
-
-if(isset($_POST["edit_save"])){
-    $saving_id = $_POST['savings_id'];
+//global $saving_id;
+if(isset($_GET['id']) && isset($_GET['editinfo'])){
+    $saving_id = $_GET['id'];
+    $edit_info = $_GET['editinfo'];
 }
 
+
 if(isset($_POST["update_savings"])) {
+    $id=$_POST["id"];
     $amount = $_POST['amount'];
     $date = $_POST['date'];
-    $update_save = "update savings set date='$date',amount='$amount' where savings_id=$saving_id";
+    $update_save = "update savings set date='$date',amount='$amount' where savings_id=$id";
     $result = mysqli_query($conn, $update_save); // Make sure to replace $your_db_connection with your actual database connection variable
     if($result){
-        echo 'Your database connectio4567890-n';
-//        $_SESSION['status'] = 'Updated successfully';
-//        header('Location:users.php');
-//        die();
+        $_SESSION['status'] = 'Updated successfully';
+        header('Location:users.php');
+        die();
     }{
-        echo 'Your database connection';
+        $_SESSION['status'] = 'something went wrong try again';
+        header('Location:users.php');
+        die();
     }
 }
 
@@ -73,6 +77,7 @@ if(isset($_SESSION['status'])){
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Amount in Shillings</label>
                     <input type="number" min="1" value="<?php echo $saves['amount'] ?>" required class="form-control" name="amount">
+                    <input type="number" hidden min="1" value="<?php echo $saving_id?>" required class="form-control" name="id">
                 </div>
 
                 <div class="mb-3">
