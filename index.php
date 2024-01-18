@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Eagles Savings</title>
-    <link rel="shortcut icon" href="images/eagle.jpeg">
+    <link rel="shortcut icon" href="images/eagle.jpg">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -26,17 +26,7 @@
 
 </style>
 <?php include 'includes/header.php' ?>
-<?php
-session_start();
-if(isset($_SESSION['status'])){
-    ?>
-    <div>
-        <p class="text-white bg-success  p-2"><?php echo $_SESSION['status']; ?> ?</p>
-    </div>
-    <?php
-    unset($_SESSION['status']);
-}
-?>
+
  <div  class="main d-flex flex-column align-items-center justify-content-center">
    <div class="main-section">
        <h1 style="text-align: center; font-size: 22px; color:white;">Eagles Savings</h1>

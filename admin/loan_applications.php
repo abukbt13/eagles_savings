@@ -35,7 +35,7 @@ if(isset($_POST["add_loan"])) {
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Loans applications</title>
-    <link rel="shortcut icon" href="/img.jpg">
+    <link rel="shortcut icon" href="../images/eagle.jpg">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <?php

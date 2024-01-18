@@ -15,7 +15,7 @@ $first_name = $_SESSION['first_name'] ;
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Dashboard</title>
-    <link rel="shortcut icon" href="../images/eagle1.webp">
+    <link rel="shortcut icon" href="../images/eagle.jpg">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <?php
@@ -67,7 +67,7 @@ include "../includes/header.php";
     ?>
     <div class="contents  d-md-flex d-lg-flex">
         <button class="d-md-none d-lg-none d-sm-block" style="color: blue;border:none;padding-right:0.5rem;margin:0.6rem;font-size: 23px;" onclick="sideBar()">
-            <i  class="fa fa-list" aria-hidden="true">
+            <i  class="fa fa-align-left" aria-hidden="true">
             </i>
         </button>
         <div id="sidebar" class="d-none px-4 d-md-block d-lg-block">

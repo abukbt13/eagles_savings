@@ -44,7 +44,7 @@ if(isset($_POST["update_savings"])) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Savings</title>
     <link rel="stylesheet" href="admin.css">
-    <link rel="shortcut icon" href="../images/eagle.jpeg">
+    <link rel="shortcut icon" href="../images/eagle.jpg">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <?php

@@ -76,7 +76,7 @@ if(isset($_POST["payloan"])) {
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Loans</title>
-    <link rel="shortcut icon" href="../images/eagle1.webp">
+    <link rel="shortcut icon" href="../images/eagle.jpg">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <?php
@@ -106,7 +106,7 @@ include "../includes/header.php";
             width: 23rem;
             position: absolute;
             top: 5rem;
-            left: 15rem;
+            left: 5rem;
             background: grey;
             z-index: 0.2;
             padding: 2rem;
@@ -283,7 +283,23 @@ include "../includes/header.php";
 
         </form>
     </div>
-    <script src="../../js/admin.js">
+    <script>
+        function sideBar(){
+            sidebar.classList.toggle('d-none')
+        }
+
+        function showForm() {
+            loan.classList.toggle('d-block')
+        }
+        function PayForm() {
+            payloan.classList.toggle('d-block')
+        }
+        function closeBtn(){
+            loan.classList.remove('d-block')
+        }
+        function closeForm(){
+            payloan.classList.remove('d-block')
+        }
 
     </script>
 </html>

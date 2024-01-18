@@ -49,7 +49,7 @@ if(isset($_POST["update_savings"])) {
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>All savings</title>
-    <link rel="shortcut icon" href="../images/eagle.jpeg">
+    <link rel="shortcut icon" href="../images/eagle.jpg">
     <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -61,7 +61,7 @@ include "../includes/header.php";
     if(isset($_SESSION['status'])){
         ?>
         <div>
-            <p class="text-white bg-danger btn-danger p-2"><?php echo $_SESSION['status']; ?> ?</p>
+            <p class="text-white bg-danger btn-success p-2"><?php echo $_SESSION['status']; ?> ?</p>
         </div>
         <?php
         unset($_SESSION['status']);
@@ -92,7 +92,7 @@ include "../includes/header.php";
             <div class="main_content">
                 <h2 class="text-uppercase">Loan</h2>
                 <p><?php
-                    $sql = "SELECT SUM(amount) AS total_amount FROM loans";
+                    $sql = "SELECT SUM(loan_amount) AS total_amount FROM loans";
                     $res = mysqli_query($conn, $sql);
                     // Fetch the result
                     $row = mysqli_fetch_assoc($res);

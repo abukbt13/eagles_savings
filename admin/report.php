@@ -19,7 +19,8 @@ $html = '<!doctype html>
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>items on bid</title>
+    <title>Savings Report</title>
+    <link rel="shortcut icon" href="images/eagle.jpg">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -71,7 +72,7 @@ $dompdf->setPaper('A4', 'landscape');
 $dompdf->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream('orders.pdf', array('Attachment' => 0));
+$dompdf->stream('savings.pdf', array('Attachment' => 0));
 
 
 

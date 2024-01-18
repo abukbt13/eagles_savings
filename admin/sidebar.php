@@ -1,6 +1,6 @@
 
     <button class="d-md-none d-lg-none d-sm-block" style="color: blue;border:none;padding-right:0.5rem;margin-left:0.6rem;font-size: 23px;" onclick="sideBar()">
-        <i  class="fa fa-list" aria-hidden="true">&trianglelefteq;
+        <i  class="fa fa-list" aria-hidden="true">
         </i>
     </button>
     <div id="sidebar" class="d-none sidebar_side p-4 d-md-block d-lg-block">

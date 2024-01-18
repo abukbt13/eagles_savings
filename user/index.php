@@ -18,7 +18,7 @@ $path="profiles/";
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Dashboard</title>
-    <link rel="shortcut icon" href="../images/eagle1.webp">
+    <link rel="shortcut icon" href="../images/eagle.jpg">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <?php
@@ -81,8 +81,7 @@ include "../includes/header.php";
     ?>
     <div class="contents  d-md-flex d-lg-flex">
         <button class="d-md-none d-lg-none d-sm-block" style="color: blue;border:none;padding-right:0.5rem;margin:0.6rem;font-size: 23px;" onclick="sideBar()">
-            <i  class="fa fa-list" aria-hidden="true">
-                show
+            <i  class="fa fa-align-left" aria-hidden="true">
             </i>
         </button>
         <div id="sidebar" class="d-none px-4 d-md-block d-lg-block">
@@ -120,12 +119,12 @@ include "../includes/header.php";
                     }
                     ?>
                 </p>
-                <button class="btn btn-primary">More ...</button>
+                <a href="my_savings.php" class="btn btn-primary">More ...</a>
             </div>
             <div class="main_content">
                 <h2 class="text-uppercase">Loan</h2>
                 <p> <?php
-                    $sql = "SELECT SUM(amount) AS total_amount FROM loans where user_id = $user_id";
+                    $sql = "SELECT SUM(loan_amount) AS total_amount FROM loans where user_id = $user_id";
                     $res = mysqli_query($conn, $sql);
 
 
@@ -141,18 +140,10 @@ include "../includes/header.php";
                     }
                     ?>
                 </p>
-                <button class="btn btn-primary">More ...</button>
+                <a href="my_loans.php" class="btn btn-primary">More ...</a>
             </div>
 
         </div>
-       <div class="">
-         <h2>Upload your picture let others see your picture </h2>
-        <form action="processor.php" method="post" enctype="multipart/form-data">
-            <label for="">Upload your image Here</label>
-            <input type="file" name="profileimage" placeholder="Upload image">
-            <button type="submit" name="picture" class="btn btn-primary">Upload</button>
-        </form>
-    </div>
 
     </div>
 
