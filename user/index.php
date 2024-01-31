@@ -73,7 +73,7 @@ include "../includes/header.php";
     if(isset($_SESSION['status'])){
         ?>
         <div>
-            <p class="text-white bg-danger btn-danger p-2"><?php echo $_SESSION['status']; ?> ?</p>
+            <p class="text-white text-uppercase bg-primary p-2"><?php echo $_SESSION['status']; ?>,<?php echo $last_name ?>!</p>
         </div>
         <?php
         unset($_SESSION['status']);

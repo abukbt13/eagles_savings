@@ -12,7 +12,7 @@ require_once '../vendor/autoload.php';
 
 
 use Dompdf\Dompdf;
-
+$total = 0;
 $html = '<!doctype html>
 <html lang="en">
 <head>
@@ -54,14 +54,15 @@ border: 2px solid #ddd;
 
 foreach ($rows as $row) {
     $html .= '<tr>
-            <td>' . $row['id'] . '</td>
+            <td>' . $row['savings_id'] . '</td>
             <td>Ksh.' . $row['amount'] . '</td>
             <td>' . $row['date'] . '</td>
             <td>' . $row['week'] . '</td>
 </tr>';
+    $total += $row['amount'];
 }
-    $html .='<tr>
-<td colspan="4"><h2>Total</h2>789</td>
+$html .='<tr>
+<td colspan="4"><h2>Total</h2>'.$total.'</td>
 </tr>';
 
 $html .= '</tbody>

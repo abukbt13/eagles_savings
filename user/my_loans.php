@@ -124,7 +124,7 @@ include "../includes/header.php";
                     ?>
                     <tr>
                         <th><?php echo $id++; ?></th>
-                        <th><?php echo $saves['amount']?></th>
+                        <th><?php echo $saves['loan_amount']?></th>
                         <th><?php echo $saves['date_borrowed']?></th>
                         <th><?php echo $saves['interest']?></th>
 

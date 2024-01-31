@@ -154,7 +154,7 @@ if(isset($_SESSION['status'])){
 
                 while($allUsers=mysqli_fetch_assoc($usersrun)) {
                     ?>
-                    <option value="<?php echo $allUsers['id']; ?>"><?php echo $allUsers['first_name']; echo" "; echo $allUsers['last_name']; ?></option>
+                    <option value="<?php echo $allUsers['first_name'];echo " ";echo $allUsers['last_name'] ?>"><?php echo $allUsers['first_name']; echo" "; echo $allUsers['last_name']; ?></option>
                     <?php
                 }
                 ?>

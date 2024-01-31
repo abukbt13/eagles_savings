@@ -1,7 +1,8 @@
 <?php
+session_start();
 include '../connection.php';
-
-$sql="SELECT * FROM savings";
+$user_id= $_SESSION['user_id'];
+$sql="SELECT * FROM savings JOIN users ON savings.user_id = users.id order by savings.savings_id  desc";
 $sqlrun=mysqli_query($conn,$sql);
 $rows = mysqli_fetch_all($sqlrun, MYSQLI_ASSOC);
 
@@ -11,7 +12,7 @@ require_once '../vendor/autoload.php';
 
 
 use Dompdf\Dompdf;
-
+$total = 0;
 $html = '<!doctype html>
 <html lang="en">
 <head>
@@ -19,27 +20,31 @@ $html = '<!doctype html>
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Savings Report</title>
-    <link rel="shortcut icon" href="images/eagle.jpg">
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Savings report</title>
+    <link rel="shortcut icon" href="../images/eagle.jpg">
+//    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 <style>
 td,th{
+text-align: left;
+font-size: 37px;
 border: 2px solid #ddd;
 }
 </style>
-    <div style="background: #7C125; padding-left: 4rem;">
+
         <div class="tems">
 
-        <h2 style="text-align: center;">
-            All savings
+        <h2 style="text-align: center;text-transform: uppercase;color: #0d6efd;">
+            Savings Report
         </h2>
         
-        <table style="border-collapse: collapse; border: 2px solid #6AE512">
+        <table style="border-collapse: collapse; border: 2px solid #6AE512;width: 100%;">
             <thead>
             <tr>
                 <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
                 <th>Amount</th>
                 <th>Date</th>
             </tr>
@@ -50,11 +55,18 @@ border: 2px solid #ddd;
 
 foreach ($rows as $row) {
     $html .= '<tr>
-            <td>' . $row['id'] . '</td>
-            <td>' . $row['amount'] . '</td>
+              <td>' . $row['id'] . '</td>
+              <td>' . $row['first_name'] . '</td>
+            <td>' . $row['last_name'] . '</td>
+            <td>ksh.' . $row['amount'] . '</td>
             <td>' . $row['date'] . '</td>
 </tr>';
+    $total += $row['amount'];
 }
+$html .='<tr>
+<td colspan="5"><p>Total Savings <span style="float: right;padding: 1rem;margin-right:1rem;background-color: #20c997;">Ksh ::'.$total.'</span></p></td>
+</tr>';
+
 $html .= '</tbody>
         </table>
         </div>
@@ -72,7 +84,7 @@ $dompdf->setPaper('A4', 'landscape');
 $dompdf->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream('savings.pdf', array('Attachment' => 0));
+$dompdf->stream('my savings.pdf', array('Attachment' => 0));
 
 
 

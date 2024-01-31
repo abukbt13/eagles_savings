@@ -61,7 +61,7 @@ include "../includes/header.php";
     if(isset($_SESSION['status'])){
         ?>
         <div>
-            <p class="text-white bg-danger btn-success p-2"><?php echo $_SESSION['status']; ?> ?</p>
+            <p class="text-white text-uppercase bg-primary p-2"><?php echo $_SESSION['status']; ?>,<?php echo $last_name ?>!</p>
         </div>
         <?php
         unset($_SESSION['status']);
@@ -70,83 +70,94 @@ include "../includes/header.php";
     <div class="contents  d-md-flex d-lg-flex">
         <?php include 'sidebar.php'?>
 
-        <div  style="" class="main">
-            <div  class="main_content">
-                <h2 class="text-uppercase">savings</h2>
-                <p>  <?php
-                    $sql = "SELECT SUM(actual) AS total_amount FROM savings";
-                    $res = mysqli_query($conn, $sql);
-                    // Fetch the result
-                    $row = mysqli_fetch_assoc($res);
-                    $totalAmount = $row["total_amount"];
-                    if($totalAmount>0){
-                        // Output the total amount
-                        echo "Total savings: " . $totalAmount;
-                    }
-                    else{
-                        echo "You have not saved anything ";
-                    }
-                    ?></p>
-                <a href="savings.php" class="btn btn-primary">More ...</a>
+        <div  style="">
+            <div class="d-flex">
+                <div  class="main_content">
+                    <h2 class="text-uppercase">savings</h2>
+                    <p>  <?php
+                        $sql = "SELECT SUM(actual) AS total_amount FROM savings";
+                        $res = mysqli_query($conn, $sql);
+                        // Fetch the result
+                        $row = mysqli_fetch_assoc($res);
+                        $totalAmount = $row["total_amount"];
+                        if($totalAmount>0){
+                            // Output the total amount
+                            echo "Total savings: " . $totalAmount;
+                        }
+                        else{
+                            echo "You have not saved anything ";
+                        }
+                        ?></p>
+                    <a href="savings.php" class="btn btn-primary">More ...</a>
+                </div>
+                <div class="main_content">
+                    <h2 class="text-uppercase">Loan</h2>
+                    <p><?php
+                        $sql = "SELECT SUM(loan_amount) AS total_amount FROM loans";
+                        $res = mysqli_query($conn, $sql);
+                        // Fetch the result
+                        $row = mysqli_fetch_assoc($res);
+                        $totalAmount = $row["total_amount"];
+                        if($totalAmount>0){
+                            // Output the total amount
+                            echo "Total Loans: " . $totalAmount;
+                        }
+                        else{
+                            echo "You have not saved anything ";
+                        }
+                        ?>
+                    </p>
+                    <button class="btn btn-primary">More ...</button>
+                </div>
             </div>
-            <div class="main_content">
-                <h2 class="text-uppercase">Loan</h2>
-                <p><?php
-                    $sql = "SELECT SUM(loan_amount) AS total_amount FROM loans";
-                    $res = mysqli_query($conn, $sql);
-                    // Fetch the result
-                    $row = mysqli_fetch_assoc($res);
-                    $totalAmount = $row["total_amount"];
-                    if($totalAmount>0){
-                        // Output the total amount
-                        echo "Total Loans: " . $totalAmount;
-                    }
-                    else{
-                        echo "You have not saved anything ";
+
+            <div class="table-responsive">
+                <table class="table  border table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th colspan="7" class=""><div class=" d-flex align-items-center justify-content-between">
+                                Latest  savings records <a href="report.php" class="btn btn-primary">Generate report</a>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $savings = "SELECT * FROM savings JOIN users ON savings.user_id = users.id order by savings.savings_id  desc limit 10";
+                    $savingsrun = mysqli_query($conn, $savings);
+                    $id = 1;
+                    $total = 0;
+
+                    while ($saves = mysqli_fetch_assoc($savingsrun)) {
+                        ?>
+                        <tr>
+                            <th><?php echo $id++; ?></th>
+                            <th><?php echo $saves['first_name'] ?></th>
+                            <th><?php echo $saves['last_name'] ?></th>
+                            <th><?php echo $saves['amount'] ?></th>
+                            <th><?php echo $saves['date'] ?></th>
+
+                        </tr>
+                        <?php
                     }
                     ?>
-                </p>
-                <button class="btn btn-primary">More ...</button>
+                    </tbody>
+                    </tbody>
+
+                </table>
             </div>
 
         </div>
 
     </div>
-    <div id="loan" class="loan  rounded">
-        <button type="button" onclick="closeBtn()" class="btn-close float-end" aria-label="Close"></button>
 
-        <form action="index.php" method="post">
-            <h2 class="text-primary" style="text-align: center;">Savings Records</h2>
-
-
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Member Name</label>
-                <select name="user_id" id="" class="form-control">
-                    <?php $users="select * from users";
-                    $usersrun=mysqli_query($conn,$users);
-
-                    while($allUsers=mysqli_fetch_assoc($usersrun)) {
-                        ?>
-                        <option value="<?php echo $allUsers['id']; ?>"><?php echo $allUsers['first_name']; echo" "; echo $allUsers['last_name']; ?></option>
-                        <?php
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Amount in Shillings</label>
-                <input type="number" min="1" class="form-control" name="amount">
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Date</label>
-                <input type="date" min="1" class="form-control" name="date">
-            </div>
-
-
-            <button type="submit" name="update_savings" class="btn btn-primary w-100">Add Saving</button>
-
-        </form>
-    </div>
 
     <script src="../js/admin.js"></script>
     </body>

@@ -100,6 +100,7 @@ include "../includes/header.php";
                 $savings="SELECT * FROM savings JOIN users ON savings.user_id = users.id where user_id=$user_id";
                 $savingsrun=mysqli_query($conn,$savings);
                 $id=1;
+                $total = 0;
                 while($saves=mysqli_fetch_assoc($savingsrun)) {
                     ?>
                     <tr>
@@ -110,9 +111,12 @@ include "../includes/header.php";
                         <td><button class="btn btn-success">query</button></td>
                     </tr>
                     <?php
+                    $total += $saves['amount']; // Add the amount to the total
                 }
                 ?>
-
+                <tr>
+                    <td colspan="8"><h2>Total savings <span class="float-end"><?php echo $total; ?></span></h2></td>
+                </tr>
                 </tbody>
 
             </table>
