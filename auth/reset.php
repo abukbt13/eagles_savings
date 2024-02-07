@@ -1,6 +1,6 @@
 <?php
-
 session_start();
+$email=$_GET['email'];
 ?>
 
 
@@ -65,11 +65,16 @@ unset($_SESSION['status']);
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
-                        <input type="password" name="c_password" class="form-control" >
+                        <input type="password" name="c_password" class="form-control">
+                        <input type="email" hidden name="email" class="form-control" value="<?php echo $email?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">OTP RECEIVED IN PHONE</label>
+                        <input type="number" name="otp" class="form-control">
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <button type="submit" name="reset_password" class="btn w-100 btn-primary">Reset </button>
+                        <button type="submit" name="reset" class="btn w-100 btn-primary">Reset </button>
                     </div>
                 </form>
             </div>

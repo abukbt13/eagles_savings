@@ -98,87 +98,92 @@ include "../includes/header.php";
         </div>
 
 
-        <div class="table-responsive">
-            <table class="table  border table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th colspan="7" class=""><div class=" d-flex align-items-center justify-content-between">
-                            <h2>My Active Loans</h2>
-                        </div>
-                    </th>
-                </tr>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Loan Amount</th>
-                    <th scope="col">Date requested</th>
-                    <th scope="col">Interest</th>
-                    <th scope="col">Operation</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                $savings="SELECT * FROM loans  where user_id = $user_id";
-                $savingsrun=mysqli_query($conn,$savings);
-                $id=1;
-                while($saves=mysqli_fetch_assoc($savingsrun)) {
-                    ?>
-                    <tr>
-                        <th><?php echo $id++; ?></th>
-                        <th><?php echo $saves['loan_amount']?></th>
-                        <th><?php echo $saves['date_borrowed']?></th>
-                        <th><?php echo $saves['interest']?></th>
+            <div class="">
+                <div class="table-responsive">
+                    <table class="table  border table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th colspan="7" class=""><div class=" d-flex align-items-center justify-content-between">
+                                    <h2>My Active Loans</h2>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Loan Amount</th>
+                            <th scope="col">Date requested</th>
+                            <th scope="col">Interest</th>
+                            <th scope="col">Operation</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $savings="SELECT * FROM loans  where user_id = $user_id";
+                        $savingsrun=mysqli_query($conn,$savings);
+                        $id=1;
+                        while($saves=mysqli_fetch_assoc($savingsrun)) {
+                            ?>
+                            <tr>
+                                <th><?php echo $id++; ?></th>
+                                <th><?php echo $saves['loan_amount']?></th>
+                                <th><?php echo $saves['date_borrowed']?></th>
+                                <th><?php echo $saves['interest']?></th>
 
-                        <th scope="col"><button class="btn btn-primary float-end">Edit</button></th></td>
-                    </tr>
-                    <?php
-                }
-                ?>
-                </tbody>
+                                <th scope="col">
+                                    <a class="btn btn-primary" href="loan_records.php?loan_id=<?php echo $saves['loan_id']; ?>">More</a>
 
-            </table>
-        </div>
+                                </th>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                        </tbody>
 
+                    </table>
+                </div>
+                <div class="table-responsive">
+                    <table class="table  border table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th colspan="7" class=""><div class=" d-flex align-items-center justify-content-between">
+                                    <h2>My Loans Applications</h2>
+                                    <button class="btn btn-primary float-end" onclick="showForm()">Apply  Loan</button>
+                                </div> </th>
+                        </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Loan Amount</th>
+                            <th scope="col">Date requested</th>
+                            <th scope="col">Period in Months</th>
+                            <th scope="col">Operation</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $savings="SELECT * FROM loans_applications  where user_id = $user_id";
+                        $savingsrun=mysqli_query($conn,$savings);
+                        $id=1;
+                        while($saves=mysqli_fetch_assoc($savingsrun)) {
+                            ?>
+                            <tr>
+                                <th><?php echo $id++; ?></th>
+                                <th><?php echo $saves['amount']?></th>
+                                <th><?php echo $saves['date']?></th>
+                                <th><?php echo $saves['period']?></th>
+
+<!--                                <th scope="col"><button class="btn btn-primary float-end">Edit</button></th></td>-->
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
 
     </div>
-    <div class="table-responsive">
-        <table class="table  border table-bordered table-striped">
-            <thead>
-            <tr>
-                <th colspan="7" class=""><div class=" d-flex align-items-center justify-content-between">
-                        <h2>Loans Applications</h2>
-                        <button class="btn btn-primary float-end" onclick="showForm()">Apply  Loan</button>
-                    </div> </th>
-            </tr>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Loan Amount</th>
-                <th scope="col">Date requested</th>
-                <th scope="col">Period in Months</th>
-                <th scope="col">Operation</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $savings="SELECT * FROM loans_applications  where user_id = $user_id";
-            $savingsrun=mysqli_query($conn,$savings);
-            $id=1;
-            while($saves=mysqli_fetch_assoc($savingsrun)) {
-                ?>
-                <tr>
-                    <th><?php echo $id++; ?></th>
-                    <th><?php echo $saves['amount']?></th>
-                    <th><?php echo $saves['date']?></th>
-                    <th><?php echo $saves['period']?></th>
 
-                    <th scope="col"><button class="btn btn-primary float-end">Edit</button></th></td>
-                </tr>
-                <?php
-            }
-            ?>
-            </tbody>
-
-        </table>
-    </div>
     </body>
 
 

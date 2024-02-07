@@ -23,7 +23,7 @@ if (isset($_POST['reset_password'])) {
                 $data = array(
                     'api_token' => 'BjBz8xAii6Tb7c8C4xhTBrUJkl91cSYD3Kt3n3AtQy56LtBczsVE5b3IFORUIqMVrhnjMXfRM2XdYDbgfcA2FQ',
                     'from' => 'SHARA',
-                    'to' => '0728548760',
+                    'to' => $phone,
                     'message' => $message
                 );
 
@@ -51,14 +51,14 @@ if (isset($_POST['reset_password'])) {
             if($otp_run){
                 session_start();
                 $_SESSION['status'] = "Check yoor phone for OTP send and use it to reset your password?";
-//                header("location:auth/reset.php");
+                header("location:auth/reset.php?email=$email");
             }
         }
         else{
             session_start();
             $_SESSION['status'] = "Something went wrong maybe network problem try again";
-echo "Status $status ";
-//            header("location:forget_password.php");
+
+            header("location:forget_password.php");
         }
     }
     else{
@@ -69,33 +69,33 @@ echo "Status $status ";
     }
 
 }
-//if (isset($_POST['resetpassword'])) {
-//    $email=$_POST['email'];
-//    $otp=$_POST['otp'];
-//
-//    $password =md5($_POST['password']);
-//    $confirmpassword = md5($_POST['confirmpassword']);
-//
-//    if($password !== $confirmpassword) {
-//        session_start();
-//        $_SESSION['status'] = "Password do not match?";
-//
-//        header("location:resetpasswordprocessor.php");
-//    }
-//    else{
-//        $changepassword = "UPDATE users SET password='$password' WHERE email='$email' and otp='$otp'";
-//        $changepassword_run=mysqli_query($conn,$changepassword);
-//        if($changepassword_run){
-//            session_start();
-//            $_SESSION['status'] = "Password changed successfully";
-//
-//            header("location:signin.php");
-//        }
-//        else{
-//            session_start();
-//            $_SESSION['status'] = "Credentials does not match check try again to reset";
-//            header("location:resetpassword.php");
-//        }
-//    }
-//
-//}
+if (isset($_POST['reset'])) {
+    $email=$_POST['email'];
+    $otp=$_POST['otp'];
+
+    $password =$_POST['password'];
+    $c_password = $_POST['c_password'];
+
+    if ($password != $c_password) {
+        session_start();
+        $_SESSION['status'] = "Passwords do not match";
+
+        header("location:reset.php?email=$email");
+    }
+    else{
+        $encrypted_password =md5($password);
+        $changepassword = "UPDATE users SET password='$encrypted_password' WHERE email='$email' and otp='$otp'";
+        $changepassword_run=mysqli_query($conn,$changepassword);
+        if($changepassword_run){
+            session_start();
+            $_SESSION['status'] = "Password changed successfully";
+            header("location:signin.php");
+        }
+        else{
+            session_start();
+            $_SESSION['status'] = "Credentials does not match check try again to reset";
+            header("location:resetpassword.php");
+        }
+    }
+
+}

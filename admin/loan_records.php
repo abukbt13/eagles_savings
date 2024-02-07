@@ -1,35 +1,7 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id'])) {
-    session_start();
-    $_SESSION['status'] = 'lOGIN TO VIEW THIS PAGE';
-    header('Location: ../auth/login.php');
-}
-
-if ($_SESSION['role'] != 1) {
-    header('Location: ../user/index.php');
-    exit(); // It's a good practice to include exit() after header() to ensure no further code execution after redirection
-}
 include '../connection.php';
-
-if(isset($_POST["user"])){
-    $user_id = $_POST['user_id'];
-}
-if (!isset($user_id)) {
-    session_start();
-    $_SESSION['status'] = 'lOGIN TO VIEW THIS PAGE';
-    header('Location: index.php');
-}
-if(isset($_POST['delete_record'])){
-    $id = $_POST['id'];
-    $delete="delete from savings where savings_id =$id ";
-    $deleterun=mysqli_query($conn,$delete);
-    if ($deleterun){
-        $_SESSION['status'] = 'Record Deleted successfully';
-        header('Location:users.php');
-        die();
-    }
-}
+$loan_id =$_GET['loan_id'];
 ?>
 <!doctype html>
 <html lang="en">
@@ -129,23 +101,23 @@ include "../includes/header.php";
                     <th colspan="7" class="">
                         <div class=" d-flex align-items-center justify-content-between">
                             <P>
-                                <b>Savings for user_id<?php echo $user_id?> savings
+                                <b>My loans payment history for user <?php echo $loan_id?>
                             </P>
                         </div>
                     </th>
                 </tr>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Savings</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Week</th>
+                    <th scope="col">Loan Balance</th>
+                    <th scope="col">Payment</th>
+                    <th scope="col">date</th>
                     <th COLSPAN="2" scope="col">OPERATIONS</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
                 $week = date('W');
-                $savings = "SELECT * FROM savings JOIN users ON savings.user_id = users.id where user_id= $user_id ";
+                $savings = "SELECT * FROM loans_payment where loan_id= $loan_id ";
                 $savingsrun = mysqli_query($conn, $savings);
                 $id = 1;
                 $total = 0;
@@ -156,17 +128,11 @@ include "../includes/header.php";
                     ?>
                     <tr>
                         <th><?php echo $id++; ?></th>
+                        <th><?php echo $saves['balance'] ?></th>
                         <th><?php echo $saves['amount'] ?></th>
                         <th><?php echo $saves['date'] ?></th>
-                        <th><?php echo $saves['week'] ?></th>
                         <th>
-                            <a class="btn btn-primary" href="edit_savings.php?id=<?php echo $saves['savings_id']; ?>&editinfo=">Edit info</a>
-                        </th>
-                        <th>
-                            <form action="user_info.php" method="post">
-                                <input hidden value="<?php echo $saves['savings_id'] ?>" name="id" type="number">
-                                <input type="submit" name="delete_record" class="btn btn-danger" value="DElETE RECORD">
-                            </form>
+                            <a class="btn btn-primary">Edit record</a>
                         </th>
                     </tr>
                     <?php
@@ -174,62 +140,7 @@ include "../includes/header.php";
                 }
                 ?>
                 <tr>
-                    <td colspan="7"><h2>Total savings <span class="float-end"><?php echo $total; ?></span></h2></td>
-                </tr>
-
-                </tbody>
-                </tbody>
-
-            </table>
-            <table class="table  border table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th colspan="7" class="">
-                        <div class=" d-flex align-items-center justify-content-between">
-                            <P>
-                                <b>Loan records  for user_id <?php echo $user_id?>
-                            </P>
-                        </div>
-                    </th>
-                </tr>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Loan Amount</th>
-                    <th scope="col">Interest</th>
-                    <th scope="col">Transaction cost</th>
-                    <th scope="col">Total Amount</th>
-                    <th scope="col">Paid Amount</th>
-                    <th scope="col">date borrowed</th>
-                    <th COLSPAN="2" scope="col">OPERATIONS</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                $savings = "SELECT * FROM  loans where user_id= $user_id ";
-                $savingsrun = mysqli_query($conn, $savings);
-                $total_loan=0;
-
-
-                while ($saves = mysqli_fetch_assoc($savingsrun)) {
-                    ?>
-                    <tr>
-                        <th><?php echo $id++; ?></th>
-                        <th><?php echo $saves['loan_amount'] ?></th>
-                        <th><?php echo $saves['interest'] ?></th>
-                        <th><?php echo $saves['transaction_cost'] ?></th>
-                        <th><?php echo $saves['total'] ?></th>
-                        <th><?php echo $saves['paid_amount'] ?></th>
-                        <th><?php echo $saves['date_borrowed'] ?></th>
-                        <th>
-                            <a class="btn btn-primary" href="loan_records.php?loan_id=<?php echo $saves['loan_id']; ?>">More</a>
-                        </th>
-                    </tr>
-                    <?php
-                    $total_loan += $saves['loan_amount']; // Add the amount to the total
-                }
-                ?>
-                <tr>
-                    <td colspan="8"><h2>Total Loans <span class="float-end"><?php echo $total_loan; ?></span></h2></td>
+                    <td colspan="7"><h2>Total Loan payment <span class="float-end"><?php echo $total; ?></span></h2></td>
                 </tr>
 
                 </tbody>

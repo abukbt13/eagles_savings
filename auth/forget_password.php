@@ -46,7 +46,7 @@ unset($_SESSION['status']);
 
         <div  style="width: 23rem;" class="form bg-white pt-5 mt-4 mb-3 rounded">
 
-            <h2 class="text-primary" style="text-align: center;">Change Password</h2>
+            <h2 class="text-primary" style="text-align: center;">Forget Password</h2>
             <?php
             if(isset($_SESSION['status'])){
                 ?>
@@ -61,11 +61,11 @@ unset($_SESSION['status']);
                 <form method="post" action="auth_processor.php" >
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Enter Your Email</label>
-                        <input type="email" name="email" class="form-control" >
+                        <input type="email" required name="email" class="form-control">
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <button type="submit" name="reset_password" class="btn w-100 btn-primary">Verify </button>
+                        <button type="submit" name="reset_password" class="btn w-100 btn-primary">Request Password reset </button>
                     </div>
                 </form>
             </div>
