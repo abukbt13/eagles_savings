@@ -30,8 +30,8 @@ if(isset($_POST["addLoan"])) {
     $save = "insert into loans(user_id,loan_amount,interest,transaction_cost,total,paid_amount,balance,week,date_borrowed,loan_type,loan_id) values('$savings_user_id','$amount',$interest,$transaction_cost,$total,0,$amount,'$weekNumber','$date','$loan_type',$time)";
     $res = mysqli_query($conn, $save);
     if($res){
-            $_SESSION['status'] = 'Loan added successfully';
-            header('Location:loans.php');
+        $_SESSION['status'] = 'Loan added successfully';
+        header('Location:loans.php');
 
     }
 }
@@ -182,6 +182,9 @@ include "../includes/header.php";
                 $savings="SELECT * FROM loans JOIN users ON loans.user_id = users.id";
                 $savingsrun=mysqli_query($conn,$savings);
                 $id=1;
+                $total_loan=0;
+                $paid_loan=0;
+                $unpaid_balance=0;
                 while($saves=mysqli_fetch_assoc($savingsrun)) {
                     ?>
                     <tr>
@@ -195,8 +198,35 @@ include "../includes/header.php";
                         <th scope="col"><button class="btn btn-primary float-end">Edit</button></th></td>
                     </tr>
                     <?php
+                    $total_loan += $saves['loan_amount'];
+                    $paid_loan += $saves['paid_amount'];
+                    $unpaid_balance += $saves['balance'];
                 }
                 ?>
+                <tr>
+                    <td colspan="6">
+                        Total Loan Amount Ksh.
+                        <?php
+                        echo $total_loan
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        Total Paid Amount Ksh.
+                        <?php
+                        echo $paid_loan
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        Total Unpaid Amount Ksh.
+                        <?php
+                        echo $unpaid_balance
+                        ?>
+                    </td>
+                </tr>
                 </tbody>
 
             </table>
@@ -229,9 +259,9 @@ include "../includes/header.php";
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Loan Type</label>
                 <select name="loan_type" id="" class="form-control">
-                        <option value="emergency">Emergency</option>
-                        <option value="short_term">Short term</option>
-                        <option value="long_term">Long Term</option>
+                    <option value="emergency">Emergency</option>
+                    <option value="short_term">Short term</option>
+                    <option value="long_term">Long Term</option>
                 </select>
             </div>
             <div class="mb-3">

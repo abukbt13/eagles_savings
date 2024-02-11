@@ -130,7 +130,7 @@ include "../includes/header.php";
                                 <th><?php echo $saves['interest']?></th>
 
                                 <th scope="col">
-                                    <a class="btn btn-primary" href="loan_records.php?loan_id=<?php echo $saves['loan_id']; ?>">More</a>
+                                    <a class="btn btn-primary" href="loan_records.php?loan_id=<?php echo $saves['loan_id']; ?>">More Details</a>
 
                                 </th>
                             </tr>

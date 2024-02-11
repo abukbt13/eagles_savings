@@ -99,7 +99,6 @@ include "../includes/header.php";
                     <th scope="col">Loan Balance</th>
                     <th scope="col">Payment</th>
                     <th scope="col">date</th>
-                    <th COLSPAN="2" scope="col">OPERATIONS</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -119,9 +118,7 @@ include "../includes/header.php";
                         <th><?php echo $saves['balance'] ?></th>
                         <th><?php echo $saves['amount'] ?></th>
                         <th><?php echo $saves['date'] ?></th>
-                        <th>
-                            <a class="btn btn-primary">Edit record</a>
-                        </th>
+
                     </tr>
                     <?php
                     $total += $saves['amount']; // Add the amount to the total

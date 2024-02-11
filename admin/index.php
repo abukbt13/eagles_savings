@@ -79,10 +79,10 @@ include "../includes/header.php";
                         $res = mysqli_query($conn, $sql);
                         // Fetch the result
                         $row = mysqli_fetch_assoc($res);
-                        $totalAmount = $row["total_amount"];
-                        if($totalAmount>0){
+                        $totalsavings = $row["total_amount"];
+                        if($totalsavings>0){
                             // Output the total amount
-                            echo "Total savings: " . $totalAmount;
+                            echo "Total savings: " . $totalsavings;
                         }
                         else{
                             echo "You have not saved anything ";
@@ -97,18 +97,82 @@ include "../includes/header.php";
                         $res = mysqli_query($conn, $sql);
                         // Fetch the result
                         $row = mysqli_fetch_assoc($res);
-                        $totalAmount = $row["total_amount"];
-                        if($totalAmount>0){
+                        $totalloans = $row["total_amount"];
+                        if($totalloans>0){
                             // Output the total amount
-                            echo "Total Loans: " . $totalAmount;
+                            echo "Total Loans: " . $totalloans;
                         }
                         else{
                             echo "You have not saved anything ";
                         }
                         ?>
                     </p>
-                    <button class="btn btn-primary">More ...</button>
+                    <a href="loans.php" class="btn btn-primary">More ...</a>
                 </div>
+                <div class="main_content">
+                    <p class="text-uppercase">Paid Loans Amount</p>
+                    <p><?php
+                        $sql = "SELECT SUM(paid_amount) AS total_amount FROM loans";
+                        $res = mysqli_query($conn, $sql);
+                        // Fetch the result
+                        $row = mysqli_fetch_assoc($res);
+                        $paidloans = $row["total_amount"];
+                        if($paidloans>0){
+                            // Output the total amount
+                            echo "Total paid Loans: " . $paidloans;
+                        }
+                        else{
+                            echo "You have not saved anything ";
+                        }
+                        echo "<br>";
+                        echo "Unpaid loans :";
+                        $unpaidloan = $totalloans-$paidloans;
+                        echo $unpaidloan;
+                        ?>
+                    </p>
+
+                </div>
+                <div class="main_content">
+                    <p class="text-uppercase">Groups Money</p>
+                    <p>
+                        <?php
+                        $sql = "SELECT SUM(amount) AS total_amount FROM groups_money";
+                        $res = mysqli_query($conn, $sql);
+                        // Fetch the result
+                        $row = mysqli_fetch_assoc($res);
+                        $groupsmoney = $row["total_amount"];
+                        if($groupsmoney>0){
+                            // Output the total amount
+                            echo "Groups Worth: " . $groupsmoney;
+                        }
+                        else{
+                            echo "You have not saved anything ";
+                        }
+
+                        $sql1 = "SELECT SUM(amount) AS total_amount FROM groups_expenditure";
+                        $res1 = mysqli_query($conn, $sql1);
+                        // Fetch the result
+                        $row1 = mysqli_fetch_assoc($res1);
+                        $expenditure = $row1["total_amount"];
+
+
+                        echo "<br>";
+                        echo "Expenditure: " . $expenditure;
+                        echo "<br>";
+                        // Assuming you have a variable $totalBudget holding the total budget amount
+                        $balance_groupmoney = $groupsmoney - $expenditure;
+                        echo "Balance: " . $balance_groupmoney;
+
+                        ?>
+                    </p>
+
+                </div>
+            </div>
+            <div class="">
+                Expected Bank balance Amount ksh. <?php
+                $total_all_balance=$totalsavings+$balance_groupmoney-$unpaidloan;
+                echo $total_all_balance;
+                ?>
             </div>
 
             <div class="table-responsive">
