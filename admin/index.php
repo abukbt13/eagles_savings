@@ -67,13 +67,24 @@ include "../includes/header.php";
         unset($_SESSION['status']);
     }
     ?>
+<style>
+    .reports{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content:center;
+        background-color:darkorange;
+        border: 1px solid;
+        margin:  10px 10px 10px 10px;
+    }
+</style>
     <div class="contents  d-md-flex d-lg-flex">
         <?php include 'sidebar.php'?>
 
         <div  style="">
             <div class="d-flex">
-                <div  class="main_content">
-                    <h2 class="text-uppercase">savings</h2>
+                <div style="background-color: #20c997;padding: 1rem;"  class="main_content">
+                    <h2 class="text-uppercase text-primary">savings</h2>
                     <p>  <?php
                         $sql = "SELECT SUM(actual) AS total_amount FROM savings";
                         $res = mysqli_query($conn, $sql);
@@ -82,7 +93,7 @@ include "../includes/header.php";
                         $totalsavings = $row["total_amount"];
                         if($totalsavings>0){
                             // Output the total amount
-                            echo "Total savings: " . $totalsavings;
+                            echo "Total savings:  . <span style='color: dodgerblue;'>$totalsavings</span>";
                         }
                         else{
                             echo "You have not saved anything ";
@@ -90,7 +101,7 @@ include "../includes/header.php";
                         ?></p>
                     <a href="savings.php" class="btn btn-primary">More ...</a>
                 </div>
-                <div class="main_content">
+                <div style="background-color: darkorange;padding: 1rem;" class="main_content">
                     <h2 class="text-uppercase">Loan</h2>
                     <p><?php
                         $sql = "SELECT SUM(loan_amount) AS total_amount FROM loans";
@@ -100,7 +111,8 @@ include "../includes/header.php";
                         $totalloans = $row["total_amount"];
                         if($totalloans>0){
                             // Output the total amount
-                            echo "Total Loans: " . $totalloans;
+                            echo "Total Loans:   . <span style='color: white;'>$totalloans</span>";
+
                         }
                         else{
                             echo "You have not saved anything ";
@@ -109,8 +121,8 @@ include "../includes/header.php";
                     </p>
                     <a href="loans.php" class="btn btn-primary">More ...</a>
                 </div>
-                <div class="main_content">
-                    <p class="text-uppercase">Paid Loans Amount</p>
+                <div  class="main_content bg-primary p-2">
+                    <h5 class="text-uppercase">Paid Loans</h5>
                     <p><?php
                         $sql = "SELECT SUM(paid_amount) AS total_amount FROM loans";
                         $res = mysqli_query($conn, $sql);
@@ -119,7 +131,8 @@ include "../includes/header.php";
                         $paidloans = $row["total_amount"];
                         if($paidloans>0){
                             // Output the total amount
-                            echo "Total paid Loans: " . $paidloans;
+                            echo "Total paid Loans: " ;
+                            echo "<h5 class='text-primary text-white'>$paidloans</h5>";
                         }
                         else{
                             echo "You have not saved anything ";
@@ -127,14 +140,13 @@ include "../includes/header.php";
                         echo "<br>";
                         echo "Unpaid loans :";
                         $unpaidloan = $totalloans-$paidloans;
-                        echo $unpaidloan;
+                        echo "<h5 class='text-primary text-white'>$unpaidloan</h5>";
                         ?>
                     </p>
 
                 </div>
-                <div class="main_content">
-                    <p class="text-uppercase">Groups Money</p>
-                    <p>
+                <div style="background-color: #20c997;padding: 1rem;" class="main_content">
+
                         <?php
                         $sql = "SELECT SUM(amount) AS total_amount FROM groups_money";
                         $res = mysqli_query($conn, $sql);
@@ -143,7 +155,8 @@ include "../includes/header.php";
                         $groupsmoney = $row["total_amount"];
                         if($groupsmoney>0){
                             // Output the total amount
-                            echo "Groups Worth: " . $groupsmoney;
+                            echo "<h5>Groups Money</h5>";
+                            echo "<p class='text-primary'>=KSH. $groupsmoney</p>";
                         }
                         else{
                             echo "You have not saved anything ";
@@ -156,26 +169,41 @@ include "../includes/header.php";
                         $expenditure = $row1["total_amount"];
 
 
-                        echo "<br>";
-                        echo "Expenditure: " . $expenditure;
-                        echo "<br>";
+                        echo "Expenditure: ";
+                        echo "<p class='text-primary'>=KSH. $expenditure</p>";
+
                         // Assuming you have a variable $totalBudget holding the total budget amount
                         $balance_groupmoney = $groupsmoney - $expenditure;
-                        echo "Balance: " . $balance_groupmoney;
+                        echo "Balance: KSH. ";
+                        echo "<span class='text-primary'>$balance_groupmoney</span>";
 
                         ?>
-                    </p>
 
                 </div>
             </div>
-            <div class="">
-                Expected Bank balance Amount ksh. <?php
-                $total_all_balance=$totalsavings+$balance_groupmoney-$unpaidloan;
-                echo $total_all_balance;
-                ?>
-            </div>
+            <div style="font-size: 23px;" class="bg-secondary text-white text-uppercase p-3">
+                Expected Bank balance Amount
+                <span class="float-end  p-1">
+                     ksh.
+                      <?php
+                      $total_all_balance=$totalsavings+$balance_groupmoney-$unpaidloan;
+                      echo $total_all_balance;
+                      ?>
+                </span>
 
-            <div class="table-responsive">
+            </div>
+     <div class="reports">
+        <div class="p-4">
+            <h4 class="text-uppercase text-center">Reports</h4>
+            <div class="" role="group" aria-label="Basic mixed styles example">
+                <a href="reports/savings.php" type="button" class="btn btn-primary">Savings</a>
+                <a href="reports/groups_money.php" type="button" class="btn btn-success">Groups money</a>
+                <a href="reports/loans.php" type="button" class="btn btn-info mx-2">Loans</a>
+                <a href="reports/loans_payment.php" type="button" class="btn btn-success">Loan Payments</a>
+            </div>
+        </div>
+     </div>
+     <div class="table-responsive">
                 <table class="table  border table-bordered table-striped">
                     <thead>
                     <tr>

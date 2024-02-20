@@ -1,5 +1,6 @@
 <?php
 include '../connection.php';
+include '../env.php';
 if (isset($_POST['reset_password'])) {
     $email = $_POST['email'];
     $otp=rand(999,10000);
@@ -21,14 +22,14 @@ if (isset($_POST['reset_password'])) {
         $curl = curl_init();
                 $message ="Hello $fname we have received your request for changing password.Use the  OTP $otp To change your password";
                 $data = array(
-                    'api_token' => 'BjBz8xAii6Tb7c8C4xhTBrUJkl91cSYD3Kt3n3AtQy56LtBczsVE5b3IFORUIqMVrhnjMXfRM2XdYDbgfcA2FQ',
-                    'from' => 'SHARA',
+                    'api_token' => $api_token,
+                    'from' => $from,
                     'to' => $phone,
                     'message' => $message
                 );
 
                 curl_setopt_array($curl, array(
-                    CURLOPT_URL => 'https://app.sharasms.co.ke/api/sms/send',
+                    CURLOPT_URL => $CURLOPT_URL,
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => '',
                     CURLOPT_MAXREDIRS => 10,
