@@ -19,8 +19,18 @@ li a:hover{
     <div id="nav_bar" class="d-none d-md-block d-lg-block">
       <ul style="list-style: none;" class="d-block align-items-center d-sm-flex d-lg-flex">
 
+          <li>
+                <a href="/media.php" class="btn btn-success">
+                    Media
+                </a>
+            </li>
           <?php
           if(isset($_SESSION['user_id'])){
+              echo '<li>
+              <a href="../user/index.php" class="btn btn-success">
+                  Dashboard
+              </a>
+          </li>';
               echo '
               <li>
               <a href="../auth/logout.php" class="btn btn-success">
@@ -28,11 +38,15 @@ li a:hover{
               </a>
           </li>
               ';
-               echo '<li>
-              <a href="../user/index.php" class="btn btn-success">
-                  Dashboard
+
+              echo '
+              <li>
+              <a style="text-decoration: none" href="../profile.php">
+                  <i style="font-size: 29px;" class="fa fa-user-circle" aria-hidden="true">Profile</i>
               </a>
-          </li>';
+          </li>
+              ';
+
           }
           else{
 
@@ -49,11 +63,7 @@ li a:hover{
           }
           ?>
 
-          <li>
-              <a style="text-decoration: none" href="../profile.php">
-                  <i style="font-size: 29px;" class="fa fa-user-circle" aria-hidden="true">Profile</i>
-              </a>
-          </li>
+
       </ul>
     </div>
 

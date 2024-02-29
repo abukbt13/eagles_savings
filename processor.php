@@ -147,23 +147,7 @@ if (isset($_POST['inquire'])) {
         header("location:index.php");
     }
 }
-if(isset($_POST["picture"])) {
-    $image= $_FILES['profileimage']['name'];
-    
-    $imagetmp = $_FILES['profileimage']['tmp_name'];
 
-if(empty($image)){
-    move_uploaded_file($imagetmp,"profiles/". $image);
-    die();
-}
-else{
-    move_uploaded_file($imagetmp,"profiles/". $image);
-    header("location:user/index.php");
-    die();
-}
-
-
-}
 
 if(isset($_POST['verify'])){
     session_start();

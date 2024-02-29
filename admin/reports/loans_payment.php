@@ -65,7 +65,7 @@ foreach ($rows as $row) {
     $total += $row['amount'];
 }
 $html .='<tr>
-<td colspan="5"><p>Total Loans Payment <span style="float: right;padding: 1rem;margin-right:1rem;background-color: #20c997;">Ksh ::'.$total.'</span></p></td>
+<td colspan="5"><p>Total Loans  <span style="float: right;padding: 1rem;margin-right:1rem;background-color: #20c997;">Ksh ::'.$total.'</span></p></td>
 </tr>';
 
 $html .= '</tbody>
