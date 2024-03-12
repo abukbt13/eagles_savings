@@ -60,13 +60,13 @@ if(isset($_POST["feedback"])) {
         unset($_SESSION['status']);
     }
     ?>
-        <div class="bg-body-tertiary d-flex justify-content-center align-items-center">
+        <div style="background-color: #4272f5;" class="d-flex justify-content-center align-items-center">
          <div class="">
              <p>Unlocking infinite possibilities through savings and investments </p>
              <p>Share a happy moment with us here <button id="getstarted" class=" btn btn-success">Get started</button></p>
          </div>
         </div>
-        <div id="post"  class="border post">
+        <div id="post"  class=" post">
             <button id="close" class="btn float-end btn-danger">close</button>
             <br>
             <br>
@@ -119,12 +119,13 @@ if(isset($_POST["feedback"])) {
 </div>
 <style>
     .post{
-        width:35rem !important;
+        width:35rem;
         position: absolute;
         top: 2rem;
         z-index:1;
         left: 18rem;
-        background-color: pink;
+        background-color: #4272f5;
+        color: white;
         padding: 2rem;
         display: none;
     }
@@ -135,8 +136,20 @@ if(isset($_POST["feedback"])) {
     }
     @media (max-width: 576px) {
         /* CSS rules for small devices */
-        width: 100%;
-        display: grid;
+        .exact{
+            display:grid;
+            grid-template-columns: 1fr;
+        }
+        .post{
+            width: 90vw;
+            position: absolute;
+            top: 2rem;
+            z-index:1;
+            left: 0.5rem;
+            background-color: #4272f5;
+            color: white;
+            display: none;
+        }
     }
     /*!* Medium devices (landscape phones, tablets) *!*/
     /*@media (min-width: 577px) and (max-width: 768px) {*/

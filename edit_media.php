@@ -25,7 +25,11 @@ if(isset($_GET['action'])){
 }
 
 if(isset($_GET['action'])){
-
+    if(!isset($_SESSION['user_id'])){
+        $_SESSION['status'] ='Login first to perform this action';
+        header('Location: auth/login.php');
+        die();
+    }
     $delete = "delete from feeds where feed_id = '$id' and user_id = '$user_id'";
     $deleterun = mysqli_query($conn, $delete);
     if ($deleterun){

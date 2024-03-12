@@ -5,7 +5,7 @@ $user_id = $_SESSION['user_id'];
 if(!isset($_SESSION['user_id'])){
     $_SESSION['status'] ='Login first to perform this action';
     header('Location: auth/login.php');
-    exit();
+    die();
 }
 
 
@@ -13,7 +13,7 @@ if(isset($_POST["updateFeed"])) {
     if (!$_SESSION['user_id']) {
         $_SESSION['status'] = 'Login first to upload feedback';
         header('Location: media.php');
-        exit(); // It's a good practice to include exit() after header() to ensure no further code execution after redirection
+        die(); // It's a good practice to include exit() after header() to ensure no further code execution after redirection
     }
 
     $feed_id = $_POST["feed_id"];
@@ -27,7 +27,7 @@ if(isset($_POST["updateFeed"])) {
     if ($feed == ""){
         $_SESSION['status'] = 'All fields are required';
         header('Location: media.php');
-        exit();
+        die();
     }
     if(empty($picture)){
         $savefeed = "update  feeds set feed ='$feed' where user_id='$user_id' and feed_id='$feed_id'";
