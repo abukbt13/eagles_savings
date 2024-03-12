@@ -4,7 +4,7 @@
 
     include '../includes/session.php';
     if ($_SESSION['role'] != 1) {
-        header('Location: dashboard.php');
+        header('Location: ../auth/login.php');
         exit(); // It's a good practice to include exit() after header() to ensure no further code execution after redirection
     }
     if(isset($_POST["addLoan"])) {

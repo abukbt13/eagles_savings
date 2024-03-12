@@ -170,3 +170,4 @@ if(isset($_POST['verify'])){
         header("location:auth/verify.php");
     }
 }
+

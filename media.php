@@ -4,21 +4,27 @@ include 'connection.php';
 
 if(isset($_POST["feedback"])) {
     if (!$_SESSION['user_id']) {
-        header('Location: /user/login.php');
+        $_SESSION['status'] = 'Login first to upload feedback';
+        header('Location: media.php');
         exit(); // It's a good practice to include exit() after header() to ensure no further code execution after redirection
     }
+
     $user_id =$_SESSION['user_id'];
     $feed = $_POST["feed"];
     $picture= $_FILES['picture']['name'];
     $picture_tmp = $_FILES['picture']['tmp_name'];
     $picture_name = rand(0,100).$picture;
-
+    if ($feed == "" || $picture == "" ){
+        $_SESSION['status'] = 'All fields are required';
+        header('Location: media.php');
+        exit();
+    }
     $savefeed = "insert into feeds (feed, picture,user_id) values('$feed','$picture_name','$user_id')";
     $savefeedrun = mysqli_query($conn, $savefeed);
     if ($savefeedrun){
         move_uploaded_file($picture_tmp,"Feeds/". $picture_name);
-        header("location:media.php");
         $_SESSION['status'] = 'Feed Added successfully';
+        header("location:media.php");
         die();
     }
 
@@ -48,69 +54,111 @@ if(isset($_POST["feedback"])) {
     if(isset($_SESSION['status'])){
         ?>
         <div>
-            <p class="text-white text-uppercase bg-primary p-2"><?php echo $_SESSION['status']; ?></p>
+            <p class="text-white text-uppercase bg-success p-2"><?php echo $_SESSION['status']; ?></p>
         </div>
         <?php
         unset($_SESSION['status']);
     }
     ?>
-    <div class="d-flex border-bottom pb-1">
-        <div class="mx-5">
-            <h2>Eagles Saving Group</h2>
-            <p>Unlocking infinite possibilities through savings and investing in projects </p>
+        <div class="bg-body-tertiary d-flex justify-content-center align-items-center">
+         <div class="">
+             <p>Unlocking infinite possibilities through savings and investments </p>
+             <p>Share a happy moment with us here <button id="getstarted" class=" btn btn-success">Get started</button></p>
+         </div>
         </div>
-        <div class="border">
+        <div id="post"  class="border post">
+            <button id="close" class="btn float-end btn-danger">close</button>
+            <br>
+            <br>
             <form action="media.php" method="post" enctype="multipart/form-data">
-               <div class="d-flex">
+               <div class="">
                    <div class="mx-2">
                        <label for="feed">Tell us something about eagle or any motivation</label>
-                       <textarea name="feed" rows="4" class="form-control"></textarea>
+                       <textarea name="feed" required rows="4" class="form-control"></textarea>
 
                    </div>
-                   <div class="mx-1">
+                   <div class="mx-1 ">
                        <label for="" class="mt-1">Upload Your picture</label>
-                       <input type="file" name="picture" class="form-control" placeholder="Upload your favorite picture">
-                       <button type="submit" name="feedback" class="btn btn-primary" >Post feed</button>
+                       <input type="file" required name="picture" class="form-control" placeholder="Upload your favorite picture">
+                       <button type="submit" name="feedback" class="btn my-4  btn-primary" >Post feed</button>
 
                    </div>
                </div>
 
             </form>
         </div>
-    </div>
-  <div class="pics">
-      <?php
-      $feeds = "SELECT * FROM feeds JOIN users ON feeds.user_id = users.id order by feeds.user_id  desc";
-      $feedsrun = mysqli_query($conn, $feeds);
+
+  <div class="pics d-flex align-items-center">
+     <div class="exact">
+         <?php
+         $feeds = "SELECT * FROM feeds JOIN users ON feeds.user_id = users.id order by feeds.user_id  desc";
+         $feedsrun = mysqli_query($conn, $feeds);
+
+         while ($saves = mysqli_fetch_assoc($feedsrun)) {
+             ?>
+
+                 <div class="card m-1">
+                     <img src="/Feeds/<?php echo $saves['picture'];  ?>" class="card-img-top" alt="...">
+                     <div class="card-body">
+                         <h5 class="card-title"><?php echo $saves['first_name'];  ?> <?php echo $saves['last_name'];  ?></h5>
+                         <p class="card-text">
+                             <?php echo $saves['feed'] ?>
+                         </p>
+                         <a href="edit_media.php?id=<?php echo $saves['feed_id'] ?>">More details</a>
+                     </div>
+                 </div>
 
 
-      while ($saves = mysqli_fetch_assoc($feedsrun)) {
-          ?>
-              <div class="">
-                  <div class="card" style="width: 25rem;">
-                      <img src="/Feeds/<?php echo $saves['picture'];  ?>" class="card-img-top" alt="...">
-                      <div class="card-body">
-                          <h5 class="card-title"><?php echo $saves['first_name'];  ?> <?php echo $saves['last_name'];  ?></h5>
-                          <p class="card-text">
-                              <?php echo $saves['feed'] ?>
-                          </p>
-                      </div>
-                  </div>
-              </div>
 
 
-
-          <?php
-      }
-      ?>
+             <?php
+         }
+         ?>
+     </div>
   </div>
 </div>
 <style>
-    .pics{
-        width: 100%;
-        display: grid;
+    .post{
+        width:35rem !important;
+        position: absolute;
+        top: 2rem;
+        z-index:1;
+        left: 18rem;
+        background-color: pink;
+        padding: 2rem;
+        display: none;
+    }
+   
+    .exact{
+        display:grid;
         grid-template-columns: 1fr 1fr 1fr;
     }
+    @media (max-width: 576px) {
+        /* CSS rules for small devices */
+        width: 100%;
+        display: grid;
+    }
+    /*!* Medium devices (landscape phones, tablets) *!*/
+    /*@media (min-width: 577px) and (max-width: 768px) {*/
+    /*    !* CSS rules for medium devices *!*/
+    /*}*/
+
+    /*!* Large devices (laptops, desktops) *!*/
+    /*@media (min-width: 769px) {*/
+    /*    !* CSS rules for large devices *!*/
+    /*}*/
+
 </style>
+<script>
+    const getstarted = document.getElementById('getstarted');
+    const post = document.getElementById('post');
+    const close = document.getElementById('close');
+    getstarted.addEventListener('click', function(){
+        post.style.display = 'block';
+    })
+    close.addEventListener('click', function(){
+        post.style.display = 'none';
+    })
+</script>
 </body>
 </html>
